@@ -5,6 +5,8 @@ import UpcomingTrainingSessions from "../UpcomingTrainingSessions/UpcomingTraini
 import ManageClients from "../ManageClients/ManageClients";
 import CreateTraining from "../CreateTraining/CreateTraining";
 import Analytics from "../Analytics/Analytics";
+import MyTrainingGroup from "../MyTrainingGroup/MyTrainingGroup";
+import TrainingHistory from "../TrainingHistory/TrainingHistory";
 
 const MainTabs = ({
   view,
@@ -33,10 +35,15 @@ const MainTabs = ({
             <GroupOverview />
             <UpcomingTrainingSessions />
           </>
-        ) : null}
+        ) : (
+          <>
+            <MyTrainingGroup />
+            <UpcomingTrainingSessions />
+          </>
+        )}
       </Tabs.Content>
       <Tabs.Content value={secondTab.value}>
-        {view === "coach" ? <ManageClients /> : null}
+        {view === "coach" ? <ManageClients /> : <TrainingHistory />}
       </Tabs.Content>
       <Tabs.Content value={thirdTab.value}>
         {view === "coach" ? <CreateTraining /> : null}
