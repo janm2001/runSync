@@ -1,6 +1,6 @@
 export interface IPerformanceCard {
-    title: string;
-    person: string;
-    performance: string;
-    color: string;
+  title: string;
+  person?: string;
+  performance: string;
+  color: string;
 }

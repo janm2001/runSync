@@ -7,6 +7,8 @@ import CreateTraining from "../CreateTraining/CreateTraining";
 import Analytics from "../Analytics/Analytics";
 import MyTrainingGroup from "../MyTrainingGroup/MyTrainingGroup";
 import TrainingHistory from "../TrainingHistory/TrainingHistory";
+import MyGroup from "../MyGroup/MyGroup";
+import ClientProgress from "@/pages/ClientProgress/ClientProgress";
 
 const MainTabs = ({
   view,
@@ -46,10 +48,10 @@ const MainTabs = ({
         {view === "coach" ? <ManageClients /> : <TrainingHistory />}
       </Tabs.Content>
       <Tabs.Content value={thirdTab.value}>
-        {view === "coach" ? <CreateTraining /> : null}
+        {view === "coach" ? <CreateTraining /> : <MyGroup />}
       </Tabs.Content>
       <Tabs.Content value={fourthTab.value}>
-        {view === "coach" ? <Analytics /> : null}
+        {view === "coach" ? <Analytics /> : <ClientProgress />}
       </Tabs.Content>
     </Tabs.Root>
   );

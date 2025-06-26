@@ -7,12 +7,13 @@ const PerformanceCard = ({
   performance,
   color,
 }: IPerformanceCard) => {
+  const personPerformance = person ? `${person} - ${performance}` : performance;
   return (
     <Card.Root p={4} mt={4} bg={color} color={`${color}.100`}>
       <Card.Header>
         <Card.Title>{title}</Card.Title>
         <Card.Description fontWeight={"bold"}>
-          {person} - {performance}
+          {personPerformance}
         </Card.Description>
       </Card.Header>
     </Card.Root>
