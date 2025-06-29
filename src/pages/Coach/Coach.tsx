@@ -1,6 +1,7 @@
 import Header from "@/components/Header/Header";
 import MainTabs from "@/components/MainTabs/MainTabs";
 import StatsCard from "@/components/StatsCard/StatsCard";
+import { useLanguage } from "@/context/LanguageContext";
 import { Container, Grid } from "@chakra-ui/react";
 
 const Coach = () => {
@@ -11,10 +12,11 @@ const Coach = () => {
     thirdTab: { label: "Create Training", value: "create-training" },
     fourthTab: { label: "Analytics", value: "analytics" },
   };
+  const { t } = useLanguage();
   return (
     <>
       <Header
-        headerTitle="Welcome back Coach!"
+        headerTitle={t("dashboard.welcome.coach")}
         headerText="Manage your groups and track performance across all your athletes"
       />
       <Container width="80%" mx="auto" mt={4}>
