@@ -1,7 +1,14 @@
 import { Card } from "@chakra-ui/react";
 import ClientCard from "../ClientCard/ClientCard";
+import { useEffect, useState } from "react";
+import { athletes, type Athlete } from "@/data/dummyData";
 
 const ManageClients = () => {
+  const [clients, setClients] = useState<Athlete[]>([]);
+  useEffect(() => {
+    //fetch atheletes from API but for now from dummyData
+    setClients(athletes);
+  }, []);
   return (
     <Card.Root>
       <Card.Header>
@@ -11,34 +18,19 @@ const ManageClients = () => {
         </Card.Description>
       </Card.Header>
       <Card.Body>
-        <ClientCard
-          name="Sarah Johnson"
-          group="Spansko 5"
-          lastRun="2 days ago"
-          performance={85}
-          improvement="+12%"
-        />
-        <ClientCard
-          name="Mike Chen"
-          group="Spansko 4"
-          lastRun="1 days ago"
-          performance={82}
-          improvement="+15%"
-        />
-        <ClientCard
-          name="Emma Davis"
-          group="Spansko 3"
-          lastRun="Today"
-          performance={79}
-          improvement="+5%"
-        />
-        <ClientCard
-          name="James Wilson"
-          group="Spansko 6"
-          lastRun="3 days ago"
-          performance={92}
-          improvement="+20%"
-        />
+        {clients.length > 0 &&
+          clients.map((athlete) => {
+            return (
+              <ClientCard
+                key={athlete.id}
+                name={athlete.name}
+                group={athlete.group}
+                lastRun={athlete.lastRun}
+                performance={athlete.performance}
+                improvement={athlete.improvement}
+              />
+            );
+          })}
       </Card.Body>
     </Card.Root>
   );

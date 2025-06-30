@@ -1,8 +1,15 @@
 import { Card, Grid, Icon } from "@chakra-ui/react";
 import GroupCard from "../GroupCard/GroupCard";
 import { FaUsers } from "react-icons/fa";
+import { groups, type Group } from "@/data/dummyData";
+import { useEffect, useState } from "react";
 
 const GroupOverview = () => {
+  const [groupData, setGroupData] = useState<Group[]>([]);
+  useEffect(() => {
+    // Fetch group data from API or use dummy data
+    setGroupData(groups);
+  }, []);
   return (
     <Card.Root p={2}>
       <Card.Header>
@@ -18,10 +25,14 @@ const GroupOverview = () => {
       </Card.Header>
       <Card.Body>
         <Grid templateColumns="repeat(4, 1fr)" gap={2}>
-          <GroupCard groupName="Spansko 6" members={7} pace="7:00-5:30" />
-          <GroupCard groupName="Spansko 5" members={7} pace="6:30-5:00" />
-          <GroupCard groupName="Spansko 4" members={7} pace="6:10-4:30" />
-          <GroupCard groupName="Spansko 3" members={7} pace="5:30-3:45" />
+          {groupData.length > 0 &&
+            groupData.map((group) => (
+              <GroupCard
+                groupName={group.name}
+                members={group.members}
+                pace={group.avgPace}
+              />
+            ))}
         </Grid>
       </Card.Body>
     </Card.Root>

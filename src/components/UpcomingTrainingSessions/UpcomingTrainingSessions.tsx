@@ -1,8 +1,15 @@
 import { Card, Icon } from "@chakra-ui/react";
 import { FaCalendar } from "react-icons/fa";
 import TrainingSession from "../TrainingSessionCard/TrainingSession";
+import { useEffect, useState } from "react";
+import { trainings, type Training } from "@/data/dummyData";
 
 const UpcomingTrainingSessions = () => {
+  const [trainingSessions, setTrainingSessions] = useState<Training[]>([]);
+  useEffect(() => {
+    //Fetch training sessions from API or use dummy data
+    setTrainingSessions(trainings);
+  }, []);
   return (
     <Card.Root p={2} mt={4}>
       <Card.Header>
@@ -14,24 +21,16 @@ const UpcomingTrainingSessions = () => {
         </Card.Title>
       </Card.Header>
       <Card.Body>
-        <TrainingSession
-          trainingTitle="Interval Training"
-          groupName="Spansko 5"
-          time="Tomorrow 19:00"
-          trainingType="Speed work"
-        />
-        <TrainingSession
-          trainingTitle="Long Run"
-          groupName="Spansko 4"
-          time="Sunday 20:30"
-          trainingType="Endurance"
-        />
-        <TrainingSession
-          trainingTitle="Recovery Run"
-          groupName="Spansko 3"
-          time="Saturday 19:00"
-          trainingType="Recovery"
-        />
+        {trainingSessions.length > 0 &&
+          trainingSessions.map((session) => (
+            <TrainingSession
+              key={session.id}
+              trainingTitle={session.title}
+              groupName={session.group}
+              time={session.date}
+              trainingType={session.type}
+            />
+          ))}
       </Card.Body>
     </Card.Root>
   );
