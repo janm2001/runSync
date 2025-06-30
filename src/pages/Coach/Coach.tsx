@@ -17,30 +17,30 @@ const Coach = () => {
     <>
       <Header
         headerTitle={t("dashboard.welcome.coach")}
-        headerText="Manage your groups and track performance across all your athletes"
+        headerText={t("dashboard.subtitle.coach")}
       />
       <Container width="80%" mx="auto" mt={4}>
         <Grid templateColumns="repeat(4, 1fr)" gap="6" mt={4}>
           <StatsCard
-            title="Total Athletes"
+            title={t("stats.total.athletes")}
             icon="users"
             statNumber={24}
             info="+2 from last month"
           />
           <StatsCard
-            title="Active Groups"
+            title={t("stats.active.groups")}
             icon="chart-pie"
             statNumber={3}
             info="Across all levels"
           />
           <StatsCard
-            title="This Week's Sessions"
+            title={t("stats.week.sessions")}
             icon="calendar"
             statNumber={12}
             info="Schedule sessions"
           />
           <StatsCard
-            title="Avg Performance"
+            title={t("stats.avg.performance")}
             icon="chart-line"
             statNumber={87}
             info="+5 from last month"
