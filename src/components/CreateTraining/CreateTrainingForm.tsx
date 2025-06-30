@@ -1,5 +1,5 @@
 import { useReducer } from "react";
-import type { Action, ICreateTrainingForm } from "./types";
+import type { Action, ICreateTrainingForm, IInterval } from "./types";
 import {
   Box,
   Button,
@@ -12,8 +12,8 @@ import {
   Icon,
   InputGroup,
 } from "@chakra-ui/react";
-
 import { FaSync } from "react-icons/fa";
+import Intervals from "./Intervals";
 
 const initialState: ICreateTrainingForm = {
   title: "",
@@ -21,6 +21,7 @@ const initialState: ICreateTrainingForm = {
   trainingType: "",
   duration: 60,
   date: "",
+  intervals: [],
   distance: 0,
   trainingDescription: "",
 };
@@ -30,11 +31,14 @@ const formReducer = (
 ): ICreateTrainingForm => {
   switch (action.type) {
     case "UPDATE_FIELD":
-      // We return a new state object by spreading the existing state
-      // and overwriting the specific field that was changed.
       return {
         ...state,
         [action.payload.field]: action.payload.value,
+      };
+    case "SET_INTERVALS":
+      return {
+        ...state,
+        intervals: action.payload,
       };
     case "RESET_FORM":
       return initialState;
@@ -59,6 +63,10 @@ const CreateTrainingForm = () => {
     });
   };
 
+  const handleIntervalsChange = (intervals: IInterval[]) => {
+    dispatch({ type: "SET_INTERVALS", payload: intervals });
+  };
+
   // Handler for the form submission.
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -78,7 +86,7 @@ const CreateTrainingForm = () => {
               <Field.Label htmlFor="title">Session Title</Field.Label>
               <Input
                 id="title"
-                placeholder="e.g., Advanced React Hooks"
+                placeholder="Title of the training session"
                 value={state.title}
                 onChange={(e) => handleFieldChange("title", e.target.value)}
               />
@@ -123,6 +131,14 @@ const CreateTrainingForm = () => {
                 </NativeSelect.Field>
               </NativeSelect.Root>
             </Field.Root>
+
+            {/* Conditionally render Intervals component */}
+            {state.trainingType === "Interval Run" && (
+              <Intervals
+                intervals={state.intervals}
+                onChange={handleIntervalsChange}
+              />
+            )}
 
             {/* Date Input */}
             <Field.Root required>
