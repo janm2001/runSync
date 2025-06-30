@@ -22,7 +22,7 @@ const PersonalRecordCard = ({
               {title}
             </Card.Title>
           </Card.Header>
-          <Card.Description>
+          <Card.Description ml={6}>
             {description ? description : "No description available"}
           </Card.Description>
         </Box>
@@ -33,7 +33,9 @@ const PersonalRecordCard = ({
               {time}
             </Card.Title>
           </Card.Header>
-          <Card.Description>{improvement ? improvement : "-"}</Card.Description>
+          <Card.Description ml={6}>
+            {improvement ? improvement : "-"}
+          </Card.Description>
         </Box>
       </Flex>
     </Card.Root>
