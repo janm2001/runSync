@@ -28,6 +28,7 @@ const GroupOverview = () => {
           {groupData.length > 0 &&
             groupData.map((group) => (
               <GroupCard
+                key={group.id}
                 groupName={group.name}
                 members={group.members}
                 pace={group.avgPace}

@@ -11,6 +11,7 @@ const Coach = () => {
     secondTab: { label: "Manage Clients", value: "manage-clients" },
     thirdTab: { label: "Create Training", value: "create-training" },
     fourthTab: { label: "Analytics", value: "analytics" },
+    fifthTab: { label: "Attendance", value: "attendance" },
   };
   const { t } = useLanguage();
   return (
@@ -52,6 +53,7 @@ const Coach = () => {
           secondTab={mainTabsConfig.secondTab}
           thirdTab={mainTabsConfig.thirdTab}
           fourthTab={mainTabsConfig.fourthTab}
+          fifthTab={mainTabsConfig.fifthTab}
         />
       </Container>
     </>

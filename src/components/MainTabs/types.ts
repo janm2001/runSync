@@ -9,4 +9,5 @@ export interface IMainTabs {
     secondTab: ITab;
     thirdTab: ITab;
     fourthTab: ITab;
+    fifthTab?: ITab;
 }

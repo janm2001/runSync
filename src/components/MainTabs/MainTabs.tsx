@@ -9,6 +9,7 @@ import MyTrainingGroup from "../MyTrainingGroup/MyTrainingGroup";
 import TrainingHistory from "../TrainingHistory/TrainingHistory";
 import MyGroup from "../MyGroup/MyGroup";
 import ClientProgress from "@/pages/ClientProgress/ClientProgress";
+import Attendances from "../Attendances/Attendances";
 
 const MainTabs = ({
   view,
@@ -16,6 +17,7 @@ const MainTabs = ({
   secondTab,
   thirdTab,
   fourthTab,
+  fifthTab,
 }: IMainTabs) => {
   return (
     <Tabs.Root
@@ -30,6 +32,9 @@ const MainTabs = ({
         <Tabs.Trigger value={secondTab.value}>{secondTab.label}</Tabs.Trigger>
         <Tabs.Trigger value={thirdTab.value}>{thirdTab.label}</Tabs.Trigger>
         <Tabs.Trigger value={fourthTab.value}>{fourthTab.label}</Tabs.Trigger>
+        {fifthTab && (
+          <Tabs.Trigger value={fifthTab.value}>{fifthTab.label}</Tabs.Trigger>
+        )}
       </Tabs.List>
       <Tabs.Content value={firstTab.value}>
         {view === "coach" ? (
@@ -53,6 +58,11 @@ const MainTabs = ({
       <Tabs.Content value={fourthTab.value}>
         {view === "coach" ? <Analytics /> : <ClientProgress />}
       </Tabs.Content>
+      {fifthTab && (
+        <Tabs.Content value={fifthTab.value}>
+          <Attendances />
+        </Tabs.Content>
+      )}
     </Tabs.Root>
   );
 };

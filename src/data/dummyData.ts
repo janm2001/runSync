@@ -25,6 +25,13 @@ export interface Group {
     description: string;
 }
 
+interface Interval {
+    distance: string;
+    repetitions: number;
+    rest: string;
+    targetPace: string;
+}
+
 export interface Training {
     id: number;
     title: string;
@@ -33,12 +40,7 @@ export interface Training {
     date: string;
     duration: number;
     description: string;
-    intervals?: {
-        distance: string;
-        repetitions: number;
-        rest: string;
-        targetPace: string;
-    };
+    intervals?: Interval[];
     attendance: number[];
     completed: boolean;
 }
@@ -158,12 +160,18 @@ export const trainings: Training[] = [
         date: "2024-06-12",
         duration: 60,
         description: "High intensity interval training to improve speed",
-        intervals: {
+        intervals: [{
             distance: "400m",
             repetitions: 6,
             rest: "90 seconds",
-            targetPace: "6:30/mile"
+            targetPace: "4:15/km"
         },
+        {
+            distance: "200m",
+            repetitions: 6,
+            rest: "60 seconds",
+            targetPace: "4:00/km"
+        },],
         attendance: [2, 5],
         completed: false
     },
