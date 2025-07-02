@@ -23,13 +23,7 @@ const UpcomingTrainingSessions = () => {
       <Card.Body>
         {trainingSessions.length > 0 &&
           trainingSessions.map((session) => (
-            <TrainingSession
-              key={session.id}
-              trainingTitle={session.title}
-              groupName={session.group}
-              time={session.date}
-              trainingType={session.type}
-            />
+            <TrainingSession key={session.id} session={session} />
           ))}
       </Card.Body>
     </Card.Root>
