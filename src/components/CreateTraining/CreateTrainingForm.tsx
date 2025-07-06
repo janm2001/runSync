@@ -14,16 +14,18 @@ import {
 } from "@chakra-ui/react";
 import { FaSync } from "react-icons/fa";
 import Intervals from "./Intervals";
+import axios from "axios";
 
 const initialState: ICreateTrainingForm = {
   title: "",
   group: "",
-  trainingType: "",
+  type: "",
   duration: 60,
   date: "",
   intervals: [],
   distance: 0,
-  trainingDescription: "",
+  attendance: [],
+  description: "",
 };
 const formReducer = (
   state: ICreateTrainingForm,
@@ -70,9 +72,14 @@ const CreateTrainingForm = () => {
   // Handler for the form submission.
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Form Submitted. Current State:", state);
-    // Here you would typically send the 'state' object to your backend API.
-    alert("Form data has been logged to the console! The form will now reset.");
+    axios
+      .post("http://localhost:3000/trainings", state)
+      .then((response) => {
+        console.log("Training session created successfully:", response.data);
+      })
+      .catch((error) => {
+        console.error("Error creating training session:", error);
+      });
     dispatch({ type: "RESET_FORM" });
   };
 
@@ -112,15 +119,13 @@ const CreateTrainingForm = () => {
 
             {/* Training Type Select */}
             <Field.Root required>
-              <Field.Label htmlFor="trainingType">Training Type</Field.Label>
+              <Field.Label htmlFor="type">Training Type</Field.Label>
               <NativeSelect.Root>
                 <NativeSelect.Field
-                  id="trainingType"
+                  id="type"
                   placeholder="Select a training type"
-                  value={state.trainingType}
-                  onChange={(e) =>
-                    handleFieldChange("trainingType", e.target.value)
-                  }
+                  value={state.type}
+                  onChange={(e) => handleFieldChange("type", e.target.value)}
                 >
                   <option value="Long Run">Long Run</option>
                   <option value="Interval Run">Interval Run</option>
@@ -133,7 +138,7 @@ const CreateTrainingForm = () => {
             </Field.Root>
 
             {/* Conditionally render Intervals component */}
-            {state.trainingType === "Interval Run" && (
+            {state.type === "Interval Run" && (
               <Intervals
                 intervals={state.intervals}
                 onChange={handleIntervalsChange}
@@ -197,9 +202,9 @@ const CreateTrainingForm = () => {
               <Textarea
                 id="trainingDescription"
                 placeholder="Describe the goals and content of the training session..."
-                value={state.trainingDescription}
+                value={state.description}
                 onChange={(e) =>
-                  handleFieldChange("trainingDescription", e.target.value)
+                  handleFieldChange("description", e.target.value)
                 }
                 rows={5}
               />

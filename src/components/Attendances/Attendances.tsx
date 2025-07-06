@@ -5,6 +5,7 @@ import {
   type Training,
 } from "@/data/dummyData";
 import { Checkbox, Flex, NativeSelect, Table } from "@chakra-ui/react";
+import axios from "axios";
 import { useEffect, useState } from "react";
 
 const Attendances = () => {
@@ -22,7 +23,14 @@ const Attendances = () => {
 
   useEffect(() => {
     //for new get dummy data later add logic to fetch trainings from API
-    setAvailableTrainings(trainings);
+    axios
+      .get("http://localhost:3000/trainings")
+      .then((response) => {
+        setAvailableTrainings(response.data as Training[]);
+      })
+      .catch((error) => {
+        console.error("Error fetching trainings:", error);
+      });
     //get available attendaces for the selected training
     if (selectedTraining !== null) {
       const targetedTraining = trainings.find(
