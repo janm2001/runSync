@@ -15,6 +15,7 @@ import {
 import { FaSync } from "react-icons/fa";
 import Intervals from "./Intervals";
 import axios from "axios";
+import { Toaster, toaster } from "../ui/toaster";
 
 const initialState: ICreateTrainingForm = {
   title: "",
@@ -74,8 +75,12 @@ const CreateTrainingForm = () => {
     e.preventDefault();
     axios
       .post("http://localhost:3000/trainings", state)
-      .then((response) => {
-        console.log("Training session created successfully:", response.data);
+      .then(() => {
+        toaster.create({
+          title: "Training Session Created",
+          description: "Your training session has been successfully created.",
+          duration: 3000,
+        });
       })
       .catch((error) => {
         console.error("Error creating training session:", error);
@@ -222,6 +227,7 @@ const CreateTrainingForm = () => {
           </VStack>
         </form>
       </Box>
+      <Toaster />
     </>
   );
 };

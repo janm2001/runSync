@@ -8,7 +8,6 @@ import type { Training } from "@/data/dummyData";
 const UpcomingTrainingSessions = () => {
   const [trainingSessions, setTrainingSessions] = useState<Training[]>([]);
   useEffect(() => {
-    //Fetch training sessions from API or use dummy data
     axios
       .get("http://localhost:3000/trainings")
       .then((response) => {
