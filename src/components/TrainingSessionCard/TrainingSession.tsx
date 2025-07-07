@@ -12,9 +12,27 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import type { ITrainingSessionCard } from "./types";
-import { FaEye } from "react-icons/fa";
+import { FaEye, FaTrash } from "react-icons/fa";
+import axios from "axios";
+import { Toaster, toaster } from "../ui/toaster";
 
 const TrainingSession = ({ session }: ITrainingSessionCard) => {
+  const deleteSession = () => {
+    axios
+      .delete(`http://localhost:3000/trainings/${session.id}`)
+      .then(() => {
+        toaster.create({
+          title: "Training session deleted successfully",
+          description: "The training session has been removed.",
+          duration: 3000,
+        });
+        window.location.reload(); // Reload the page to reflect changes
+      })
+      .catch((error) => {
+        console.error("Error deleting training session:", error);
+        alert("Failed to delete training session. Please try again.");
+      });
+  };
   const dialogComponent = () => {
     return (
       <Dialog.Root size="lg" placement="center" motionPreset="slide-in-bottom">
@@ -75,29 +93,39 @@ const TrainingSession = ({ session }: ITrainingSessionCard) => {
   };
 
   return (
-    <Card.Root p={4} mt={2}>
-      <Card.Header p={0}>
-        <Flex justifyContent="space-between" alignItems="center" width="100%">
-          <Flex direction="column" alignItems="flex-start" flexGrow={1}>
-            <Card.Title fontSize="lg" fontWeight="semibold" mb={0}>
-              {session.title}
-            </Card.Title>
-            <Card.Description>
-              <Text color="gray.500" fontSize="sm">
-                {session.group} - {session.date}
-              </Text>
-            </Card.Description>
-          </Flex>
+    <>
+      <Toaster />
+      <Card.Root p={4} mt={2}>
+        <Card.Header p={0}>
+          <Flex justifyContent="space-between" alignItems="center" width="100%">
+            <Flex direction="column" alignItems="flex-start" flexGrow={1}>
+              <Card.Title fontSize="lg" fontWeight="semibold" mb={0}>
+                {session.title}
+              </Card.Title>
+              <Card.Description>
+                <Text color="gray.500" fontSize="sm">
+                  {session.group} - {session.date}
+                </Text>
+              </Card.Description>
+            </Flex>
 
-          <VStack gap={2} alignItems="flex-end">
-            <Tag.Root variant={"solid"} colorScheme="blue" size={"lg"}>
-              <Tag.Label>{session.type}</Tag.Label>
-            </Tag.Root>
-            {dialogComponent()}
-          </VStack>
-        </Flex>
-      </Card.Header>
-    </Card.Root>
+            <VStack gap={2} alignItems="flex-end">
+              <Tag.Root variant={"solid"} colorScheme="blue" size={"lg"}>
+                <Tag.Label>{session.type}</Tag.Label>
+              </Tag.Root>
+              <Flex gap={2}>
+                {dialogComponent()}
+                <Button variant={"outline"} onClick={deleteSession}>
+                  <Icon size="md">
+                    <FaTrash />
+                  </Icon>
+                </Button>
+              </Flex>
+            </VStack>
+          </Flex>
+        </Card.Header>
+      </Card.Root>
+    </>
   );
 };
 
