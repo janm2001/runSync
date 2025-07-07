@@ -1,11 +1,13 @@
 import { Button, Flex, Icon, Text } from "@chakra-ui/react";
-import type { INavbar, ViewTab } from "./types";
+import type { ViewTab } from "./types";
 import { FaGlobe } from "react-icons/fa";
 import { useLanguage } from "@/context/LanguageContext";
+import { useUser } from "@/context/UserContext";
 
-const Navbar = ({ activeTab, setActiveTab }: INavbar) => {
+const Navbar = () => {
+  const { user, setUser } = useUser();
   const onTabChange = (tab: ViewTab) => {
-    setActiveTab(tab);
+    setUser(tab);
   };
   const { language, setLanguage } = useLanguage();
   return (
@@ -47,15 +49,15 @@ const Navbar = ({ activeTab, setActiveTab }: INavbar) => {
         <Text>View as: </Text>
         <Flex align="stretch" gap={2} flexWrap="wrap">
           <Button
-            bg={activeTab === "client" ? "black" : "white"}
-            color={activeTab === "client" ? "white" : "gray.800"}
+            bg={user === "client" ? "black" : "white"}
+            color={user === "client" ? "white" : "gray.800"}
             onClick={() => onTabChange("client")}
           >
             Client
           </Button>
           <Button
-            bg={activeTab === "coach" ? "black" : "white"}
-            color={activeTab === "coach" ? "white" : "gray.800"}
+            bg={user === "coach" ? "black" : "white"}
+            color={user === "coach" ? "white" : "gray.800"}
             onClick={() => onTabChange("coach")}
           >
             Coach

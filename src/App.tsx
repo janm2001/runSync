@@ -1,17 +1,19 @@
-import { useState } from "react";
 import Navbar from "./components/Navbar/Navbar";
 import Coach from "./pages/Coach/Coach";
-import type { ViewTab } from "./components/Navbar/types";
 import Client from "./pages/Client/Client";
 import { LanguageProvider } from "./context/LanguageContext";
+import { UserPrvoider, useUser } from "./context/UserContext";
 
 function App() {
-  const [activeTab, setActiveTab] = useState<ViewTab>("client");
+  const { user } = useUser();
+  console.log("Current user:", user);
   return (
-    <LanguageProvider>
-      <Navbar activeTab={activeTab} setActiveTab={setActiveTab} />
-      {activeTab === "client" ? <Client /> : <Coach />}
-    </LanguageProvider>
+    <UserPrvoider>
+      <LanguageProvider>
+        <Navbar />
+        {user === "client" ? <Client /> : <Coach />}
+      </LanguageProvider>
+    </UserPrvoider>
   );
 }
 
