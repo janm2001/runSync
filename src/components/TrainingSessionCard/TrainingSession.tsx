@@ -15,8 +15,10 @@ import type { ITrainingSessionCard } from "./types";
 import { FaEye, FaTrash } from "react-icons/fa";
 import axios from "axios";
 import { Toaster, toaster } from "../ui/toaster";
+import { useUser } from "@/context/UserContext";
 
 const TrainingSession = ({ session }: ITrainingSessionCard) => {
+  const { user } = useUser();
   const deleteSession = () => {
     axios
       .delete(`http://localhost:3000/trainings/${session.id}`)
@@ -115,11 +117,13 @@ const TrainingSession = ({ session }: ITrainingSessionCard) => {
               </Tag.Root>
               <Flex gap={2}>
                 {dialogComponent()}
-                <Button variant={"outline"} onClick={deleteSession}>
-                  <Icon size="md">
-                    <FaTrash />
-                  </Icon>
-                </Button>
+                {user === "coach" && (
+                  <Button variant={"outline"} onClick={deleteSession}>
+                    <Icon size="md">
+                      <FaTrash />
+                    </Icon>
+                  </Button>
+                )}
               </Flex>
             </VStack>
           </Flex>

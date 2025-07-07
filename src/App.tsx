@@ -4,14 +4,21 @@ import Client from "./pages/Client/Client";
 import { LanguageProvider } from "./context/LanguageContext";
 import { UserPrvoider, useUser } from "./context/UserContext";
 
-function App() {
+const AppContent = () => {
   const { user } = useUser();
-  console.log("Current user:", user);
+  return (
+    <>
+      <Navbar />
+      {user === "client" ? <Client /> : <Coach />}
+    </>
+  );
+};
+
+function App() {
   return (
     <UserPrvoider>
       <LanguageProvider>
-        <Navbar />
-        {user === "client" ? <Client /> : <Coach />}
+        <AppContent />
       </LanguageProvider>
     </UserPrvoider>
   );
