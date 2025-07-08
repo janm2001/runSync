@@ -1,7 +1,8 @@
 import type { Athlete, Training } from "@/data/dummyData";
-import { Checkbox, Flex, NativeSelect, Table } from "@chakra-ui/react";
+import { Button, Checkbox, Flex, NativeSelect, Table } from "@chakra-ui/react";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { toaster } from "../ui/toaster";
 
 const Attendances = () => {
   //first select the training and then get all the attendances for that training
@@ -28,6 +29,7 @@ const Attendances = () => {
       });
   };
 
+  console.log("Training:", availableTrainings);
   const getAllAthletes = async () => {
     await axios
       .get("http://localhost:3000/athletes")
@@ -36,6 +38,31 @@ const Attendances = () => {
       })
       .catch((error) => {
         console.error("Error fetching trainings:", error);
+      });
+  };
+
+  const updateAttendances = async () => {
+    const targetedTraining = availableTrainings.find(
+      (training) => training.id === selectedTraining
+    );
+    if (!targetedTraining) {
+      console.error("Selected training not found");
+      return;
+    }
+    await axios
+      .put(`http://localhost:3000/trainings/${selectedTraining}`, {
+        ...targetedTraining,
+        attendance: attendances,
+      })
+      .then(() => {
+        toaster.create({
+          title: "Attendance Updated",
+          description: "Your attendaces have been successfuly updated.",
+          duration: 3000,
+        });
+      })
+      .catch((error) => {
+        console.error("Error updating attendances:", error);
       });
   };
 
@@ -48,12 +75,10 @@ const Attendances = () => {
       const targetedTraining = availableTrainings.find(
         (training) => training.id === selectedTraining
       );
-
-      console.log("Targeted Training:", targetedTraining?.group);
-      console.log("Athletes:", athletes);
       setAvailableAttendances(
         athletes.filter((athlete) => athlete.group == targetedTraining?.group)
       );
+      setAttendances(targetedTraining?.attendance || []);
     }
   }, [selectedTraining]);
 
@@ -133,6 +158,15 @@ const Attendances = () => {
         </Table.Header>
         <Table.Body>{rows}</Table.Body>
       </Table.Root>
+      <Flex justifyContent={"end"} my={4}>
+        <Button
+          variant="outline"
+          colorPalette="cyan"
+          onClick={updateAttendances}
+        >
+          Sync Attendances
+        </Button>
+      </Flex>
     </>
   );
 };

@@ -210,7 +210,10 @@
           "targetPace": "4:00/km"
         }
       ],
-      "attendance": [2, 5],
+      "attendance": [
+        2,
+        5
+      ],
       "completed": false
     },
     {
@@ -221,7 +224,9 @@
       "date": "2024-06-15",
       "duration": 90,
       "description": "Endurance building long run at conversational pace",
-      "attendance": [3],
+      "attendance": [
+        3
+      ],
       "completed": false
     },
     {
@@ -232,7 +237,9 @@
       "date": "2024-06-16",
       "duration": 30,
       "description": "Easy pace recovery run for active recovery",
-      "attendance": [1, 4],
+      "attendance": [
+        "4"
+      ],
       "completed": false
     },
     {
@@ -256,7 +263,10 @@
       "date": "2025-07-09",
       "intervals": [],
       "distance": 12,
-      "attendance": [],
+      "attendance": [
+        "6",
+        "9"
+      ],
       "description": "test"
     }
   ],
