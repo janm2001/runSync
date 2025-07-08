@@ -1,18 +1,14 @@
-import {
-  athletes,
-  trainings,
-  type Athlete,
-  type Training,
-} from "@/data/dummyData";
+import type { Athlete, Training } from "@/data/dummyData";
 import { Checkbox, Flex, NativeSelect, Table } from "@chakra-ui/react";
 import axios from "axios";
 import { useEffect, useState } from "react";
 
 const Attendances = () => {
   //first select the training and then get all the attendances for that training
-  const [selectedTraining, setSelectedTraining] = useState<number | null>(null);
+  const [selectedTraining, setSelectedTraining] = useState<string | null>(null);
   const [attendances, setAttendances] = useState<number[]>([]);
   const [availableTrainings, setAvailableTrainings] = useState<Training[]>([]);
+  const [athletes, setAthletes] = useState<Athlete[]>([]);
   const [availableAttendances, setAvailableAttendances] = useState<Athlete[]>(
     []
   );
@@ -21,9 +17,8 @@ const Attendances = () => {
   const indeterminate =
     hasSelection && attendances.length < availableAttendances.length;
 
-  useEffect(() => {
-    //for new get dummy data later add logic to fetch trainings from API
-    axios
+  const getAvailableTrainings = async () => {
+    await axios
       .get("http://localhost:3000/trainings")
       .then((response) => {
         setAvailableTrainings(response.data as Training[]);
@@ -31,13 +26,33 @@ const Attendances = () => {
       .catch((error) => {
         console.error("Error fetching trainings:", error);
       });
+  };
+
+  const getAllAthletes = async () => {
+    await axios
+      .get("http://localhost:3000/athletes")
+      .then((response) => {
+        setAthletes(response.data as Athlete[]);
+      })
+      .catch((error) => {
+        console.error("Error fetching trainings:", error);
+      });
+  };
+
+  useEffect(() => {
+    //for new get dummy data later add logic to fetch trainings from API
+    getAvailableTrainings();
+    getAllAthletes();
     //get available attendaces for the selected training
     if (selectedTraining !== null) {
-      const targetedTraining = trainings.find(
+      const targetedTraining = availableTrainings.find(
         (training) => training.id === selectedTraining
       );
+
+      console.log("Targeted Training:", targetedTraining?.group);
+      console.log("Athletes:", athletes);
       setAvailableAttendances(
-        athletes.filter((athlete) => athlete.group === targetedTraining?.group)
+        athletes.filter((athlete) => athlete.group == targetedTraining?.group)
       );
     }
   }, [selectedTraining]);
@@ -77,7 +92,7 @@ const Attendances = () => {
         <NativeSelect.Root size="sm" width="240px">
           <NativeSelect.Field
             placeholder="Select Training for attendance"
-            onChange={(e) => setSelectedTraining(Number(e.target.value))}
+            onChange={(e) => setSelectedTraining(e.target.value)}
           >
             {availableTrainings.map((training) => (
               <option value={training.id}>

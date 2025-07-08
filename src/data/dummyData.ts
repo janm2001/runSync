@@ -33,7 +33,7 @@ interface Interval {
 }
 
 export interface Training {
-    id: number;
+    id: string | number;
     title: string;
     type: "intervals" | "tempo" | "long" | "recovery" | "fartlek" | "hill";
     group: string;
