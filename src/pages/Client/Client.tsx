@@ -11,6 +11,7 @@ const Client = () => {
     secondTab: { label: "Training History", value: "training-history" },
     thirdTab: { label: "My Group", value: "my-group" },
     fourthTab: { label: "Progress", value: "progress" },
+    fifthTab: { label: "Strava Sync", value: "strava-sync" },
   };
   const { t } = useLanguage();
   return (
@@ -52,6 +53,7 @@ const Client = () => {
           secondTab={mainTabsConfig.secondTab}
           thirdTab={mainTabsConfig.thirdTab}
           fourthTab={mainTabsConfig.fourthTab}
+          fifthTab={mainTabsConfig.fifthTab}
         />
       </Container>
     </>

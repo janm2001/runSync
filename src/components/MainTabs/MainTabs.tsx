@@ -10,6 +10,7 @@ import TrainingHistory from "../TrainingHistory/TrainingHistory";
 import MyGroup from "../MyGroup/MyGroup";
 import ClientProgress from "@/pages/ClientProgress/ClientProgress";
 import Attendances from "../Attendances/Attendances";
+import StravaSync from "../StravaSync/StravaSync";
 
 const MainTabs = ({
   view,
@@ -58,11 +59,9 @@ const MainTabs = ({
       <Tabs.Content value={fourthTab.value}>
         {view === "coach" ? <Analytics /> : <ClientProgress />}
       </Tabs.Content>
-      {fifthTab && (
-        <Tabs.Content value={fifthTab.value}>
-          <Attendances />
-        </Tabs.Content>
-      )}
+      <Tabs.Content value={fifthTab.value}>
+        {view === "coach" ? <Attendances /> : <StravaSync />}
+      </Tabs.Content>
     </Tabs.Root>
   );
 };
