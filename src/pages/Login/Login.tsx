@@ -10,7 +10,11 @@ import {
 } from "@chakra-ui/react";
 import { useState } from "react";
 
-const Login = () => {
+interface LoginProps {
+  handleLogin: () => void;
+}
+
+const Login = ({ handleLogin }: LoginProps) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [isInvalid, setIsInvalid] = useState(false);
@@ -25,7 +29,7 @@ const Login = () => {
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (username.trim() === "admin" && password.trim() === "admin") {
-      alert("Login successful!");
+      handleLogin();
     } else {
       setIsInvalid(true);
       alert("Invalid username or password");

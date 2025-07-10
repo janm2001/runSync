@@ -14,7 +14,7 @@ const PersonalRecordCard = ({
   description,
 }: IPersonalRecordCard) => {
   return (
-    <Card.Root p={2}>
+    <Card.Root p={2} mt={4}>
       <Flex align="center" justify={"space-between"} gap={4}>
         <Box>
           <Card.Header>

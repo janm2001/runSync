@@ -225,7 +225,8 @@
       "duration": 90,
       "description": "Endurance building long run at conversational pace",
       "attendance": [
-        3
+        3,
+        "3"
       ],
       "completed": false
     },
