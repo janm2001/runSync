@@ -13,12 +13,19 @@ const STRAVA_AUTH_URL = `https://www.strava.com/oauth/authorize?client_id=${STRA
 // after the user has logged in and completed the OAuth flow.
 // For this example, you can get a temporary one from your Strava API settings page
 // under "My App" to test the API call.
-const MOCK_ACCESS_TOKEN = "b33b2584b52b1eabc4e0169d54ab3a13ad95663f";
+const MOCK_ACCESS_TOKEN = "";
+
+// Define a type for Strava activity (simplified for this example)
+type StravaActivity = {
+  id: number;
+  name: string;
+  start_date: string;
+};
 
 const StravaSync = () => {
-  const [activities, setActivities] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState(null);
+  const [activities, setActivities] = useState<StravaActivity[]>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string | null>(null);
 
   const isAuthenticated = !!MOCK_ACCESS_TOKEN;
 
@@ -43,8 +50,13 @@ const StravaSync = () => {
 
           const data = await response.json();
           setActivities(data);
-        } catch (error: Error) {
+        } catch (error: unknown) {
           console.error("Failed to fetch activities:", error);
+          if (error instanceof Error) {
+            setError(error.message);
+          } else {
+            setError("An unknown error occurred.");
+          }
         } finally {
           setIsLoading(false);
         }
@@ -69,7 +81,7 @@ const StravaSync = () => {
             <p>Error: {error}</p>
           ) : activities.length > 0 ? (
             <ul>
-              {activities.map((activity: any) => (
+              {activities.map((activity: StravaActivity) => (
                 <li key={activity.id}>
                   {activity.name} -{" "}
                   {new Date(activity.start_date).toLocaleDateString()}
