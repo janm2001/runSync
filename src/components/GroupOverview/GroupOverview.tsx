@@ -9,8 +9,6 @@ const GroupOverview = () => {
   const [groupData, setGroupData] = useState<Group[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   useEffect(() => {
-    // Fetch group data from API or use dummy data
-    // Simulating an API call with dummy data
     axios
       .get("http://localhost:3000/groups")
       .then((response) => {
