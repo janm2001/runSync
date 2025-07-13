@@ -1,25 +1,64 @@
-import { Card, Grid, Icon, SkeletonText } from "@chakra-ui/react";
+import {
+  Card,
+  EmptyState,
+  Grid,
+  Icon,
+  SkeletonText,
+  VStack,
+} from "@chakra-ui/react";
 import GroupCard from "../GroupCard/GroupCard";
 import { FaUsers } from "react-icons/fa";
 import { type Group } from "@/data/dummyData";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { HiColorSwatch } from "react-icons/hi";
 
 const GroupOverview = () => {
   const [groupData, setGroupData] = useState<Group[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [isError, setIsError] = useState<boolean>(false);
   useEffect(() => {
     axios
       .get("http://localhost:3000/groups")
       .then((response) => {
         setGroupData(response.data);
         setIsLoading(false);
+        setIsError(false);
       })
       .catch((error) => {
         console.error("Error fetching group data:", error);
         setIsLoading(false);
+        setIsError(true);
       });
   }, []);
+
+  if (isError) {
+    return (
+      <Card.Root p={2}>
+        <Card.Header>
+          <Card.Title alignItems={"center"} display="flex" gap={2}>
+            <Icon size={"lg"}>
+              <FaUsers />
+            </Icon>{" "}
+            Group Overview
+          </Card.Title>
+          <Card.Description>
+            Monitor your training groups at a glance
+          </Card.Description>
+        </Card.Header>
+        <EmptyState.Root>
+          <EmptyState.Content>
+            <EmptyState.Indicator>
+              <HiColorSwatch />
+            </EmptyState.Indicator>
+            <VStack textAlign="center">
+              <EmptyState.Title>No Data Found</EmptyState.Title>
+            </VStack>
+          </EmptyState.Content>
+        </EmptyState.Root>
+      </Card.Root>
+    );
+  }
   return (
     <Card.Root p={2}>
       {isLoading ? (
