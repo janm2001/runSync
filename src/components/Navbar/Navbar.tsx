@@ -1,4 +1,14 @@
-import { Button, Flex, Icon, Text } from "@chakra-ui/react";
+import {
+  Avatar,
+  Box,
+  Button,
+  Flex,
+  Icon,
+  IconButton,
+  Menu,
+  Portal,
+  Text,
+} from "@chakra-ui/react";
 import type { ViewTab } from "./types";
 import { FaGlobe } from "react-icons/fa";
 import { useLanguage } from "@/context/LanguageContext";
@@ -63,6 +73,30 @@ const Navbar = () => {
             Coach
           </Button>
         </Flex>
+        <Box position="relative">
+          <Menu.Root positioning={{ placement: "top-end" }}>
+            <Menu.Trigger asChild>
+              <IconButton
+                variant="ghost"
+                aria-label="User menu"
+                rounded={"full"}
+              >
+                <Avatar.Root>
+                  <Avatar.Fallback name="Coach Jan"></Avatar.Fallback>
+                </Avatar.Root>
+              </IconButton>
+            </Menu.Trigger>
+            <Portal>
+              <Menu.Positioner>
+                <Menu.Content>
+                  <Menu.Item value="profile">Profile</Menu.Item>
+                  <Menu.Item value="settings">Settings</Menu.Item>
+                  <Menu.Item value="logout">Logout</Menu.Item>
+                </Menu.Content>
+              </Menu.Positioner>
+            </Portal>
+          </Menu.Root>
+        </Box>
       </Flex>
     </Flex>
   );
