@@ -13,6 +13,7 @@ import type { ViewTab } from "./types";
 import { FaGlobe } from "react-icons/fa";
 import { useLanguage } from "@/context/LanguageContext";
 import { useUser } from "@/context/UserContext";
+import { useNavigate } from "react-router-dom";
 
 const Navbar = () => {
   const { user, setUser } = useUser();
@@ -20,6 +21,7 @@ const Navbar = () => {
     setUser(tab);
   };
   const { language, setLanguage } = useLanguage();
+  const navigate = useNavigate();
   return (
     <Flex
       as={"nav"}
@@ -89,9 +91,21 @@ const Navbar = () => {
             <Portal>
               <Menu.Positioner>
                 <Menu.Content>
-                  <Menu.Item value="profile">Profile</Menu.Item>
-                  <Menu.Item value="settings">Settings</Menu.Item>
-                  <Menu.Item value="logout">Logout</Menu.Item>
+                  <Menu.Item
+                    value="profile"
+                    onClick={() => navigate("/profile")}
+                  >
+                    Profile
+                  </Menu.Item>
+                  <Menu.Item
+                    value="settings"
+                    onClick={() => navigate("/settings")}
+                  >
+                    Settings
+                  </Menu.Item>
+                  <Menu.Item value="logout" onClick={() => setUser(null)}>
+                    Logout
+                  </Menu.Item>
                 </Menu.Content>
               </Menu.Positioner>
             </Portal>

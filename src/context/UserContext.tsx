@@ -3,8 +3,8 @@ import { createContext, useContext, useState, type ReactNode } from "react";
 type User = "client" | "coach";
 
 interface UserContextType {
-  user: User;
-  setUser: (user: User) => void;
+  user: User | null;
+  setUser: (user: User | null) => void;
 }
 
 const UserContext = createContext<UserContextType | undefined>({
@@ -13,7 +13,7 @@ const UserContext = createContext<UserContextType | undefined>({
 });
 
 export const UserPrvoider = ({ children }: { children: ReactNode }) => {
-  const [user, setUser] = useState<User>("client");
+  const [user, setUser] = useState<User | null>(null);
 
   return (
     <UserContext.Provider value={{ user, setUser }}>

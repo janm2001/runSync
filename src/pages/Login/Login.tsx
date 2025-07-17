@@ -1,3 +1,4 @@
+import { useUser } from "@/context/UserContext";
 import {
   Box,
   Heading,
@@ -9,15 +10,14 @@ import {
   Container,
 } from "@chakra-ui/react";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
-interface LoginProps {
-  handleLogin: () => void;
-}
-
-const Login = ({ handleLogin }: LoginProps) => {
+const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [isInvalid, setIsInvalid] = useState(false);
+  const { setUser } = useUser();
+  const navigate = useNavigate();
 
   const handleUsernameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setUsername(event.target.value);
@@ -29,7 +29,9 @@ const Login = ({ handleLogin }: LoginProps) => {
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (username.trim() === "admin" && password.trim() === "admin") {
-      handleLogin();
+      setUser("coach");
+      //navigate to the main page with the router dom
+      navigate("/");
     } else {
       setIsInvalid(true);
       alert("Invalid username or password");
