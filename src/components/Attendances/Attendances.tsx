@@ -19,8 +19,14 @@ const Attendances = () => {
     hasSelection && attendances.length < availableAttendances.length;
 
   const getAvailableTrainings = async () => {
+    const apiUrl = import.meta.env.VITE_API_BASE_URL;
     await axios
-      .get("http://localhost:3000/trainings")
+      .get(apiUrl + "/trainings", {
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+          "Content-Type": "application/json",
+        },
+      })
       .then((response) => {
         setAvailableTrainings(response.data as Training[]);
       })
@@ -29,10 +35,15 @@ const Attendances = () => {
       });
   };
 
-  console.log("Training:", availableTrainings);
   const getAllAthletes = async () => {
+    const apiUrl = import.meta.env.VITE_API_BASE_URL;
     await axios
-      .get("http://localhost:3000/athletes")
+      .get(apiUrl + "/athletes", {
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+          "Content-Type": "application/json",
+        },
+      })
       .then((response) => {
         setAthletes(response.data as Athlete[]);
       })

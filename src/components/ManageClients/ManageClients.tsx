@@ -10,8 +10,14 @@ const ManageClients = () => {
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [isError, setIsError] = useState<boolean>(false);
   useEffect(() => {
+    const apiUrl = import.meta.env.VITE_API_BASE_URL;
     axios
-      .get("http://localhost:3000/athletes")
+      .get(apiUrl + "/athletes", {
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+          "Content-Type": "application/json",
+        },
+      })
       .then((response) => {
         setClients(response.data);
         setIsLoading(false);

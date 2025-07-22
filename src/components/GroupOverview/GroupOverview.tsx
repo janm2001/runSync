@@ -18,8 +18,14 @@ const GroupOverview = () => {
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [isError, setIsError] = useState<boolean>(false);
   useEffect(() => {
+    const apiUrl = import.meta.env.VITE_API_BASE_URL;
     axios
-      .get("http://localhost:3000/groups")
+      .get(apiUrl + "/groups", {
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+          "Content-Type": "application/json",
+        },
+      })
       .then((response) => {
         setGroupData(response.data);
         setIsLoading(false);

@@ -13,7 +13,12 @@ const UpcomingTrainingSessions = () => {
   useEffect(() => {
     const apiUrl = import.meta.env.VITE_API_BASE_URL;
     axios
-      .get(apiUrl + "/trainings")
+      .get(apiUrl + "/trainings", {
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+          "Content-Type": "application/json",
+        },
+      })
       .then((response) => {
         setTrainingSessions(response.data as Training[]);
         setIsLoading(false);
