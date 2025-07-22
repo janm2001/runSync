@@ -11,8 +11,9 @@ const UpcomingTrainingSessions = () => {
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [isError, setIsError] = useState<boolean>(false);
   useEffect(() => {
+    const apiUrl = import.meta.env.VITE_API_BASE_URL;
     axios
-      .get("http://localhost:3000/trainings")
+      .get(apiUrl + "/trainings")
       .then((response) => {
         setTrainingSessions(response.data as Training[]);
         setIsLoading(false);
