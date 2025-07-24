@@ -73,8 +73,9 @@ const CreateTrainingForm = () => {
   // Handler for the form submission.
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    const apiUrl = import.meta.env.VITE_API_BASE_URL;
     axios
-      .post("http://localhost:3000/trainings", state)
+      .post(`${apiUrl}/trainings`, state)
       .then(() => {
         toaster.create({
           title: "Training Session Created",
@@ -83,7 +84,7 @@ const CreateTrainingForm = () => {
         });
       })
       .catch((error) => {
-        console.error("Error creating training session:", error);
+        console.error("Error creating training session:", error.response);
       });
     dispatch({ type: "RESET_FORM" });
   };

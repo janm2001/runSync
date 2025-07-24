@@ -17,18 +17,25 @@ import axios from "axios";
 import { Toaster, toaster } from "../ui/toaster";
 import { useUser } from "@/context/UserContext";
 
-const TrainingSession = ({ session }: ITrainingSessionCard) => {
+const TrainingSession = ({
+  session,
+  fetchTrainingSessions,
+}: ITrainingSessionCard) => {
   const { user } = useUser();
+  console.log("Training session:", session);
   const deleteSession = () => {
+    const apiUrl = import.meta.env.VITE_API_BASE_URL;
     axios
-      .delete(`http://localhost:3000/trainings/${session.id}`)
+      .delete(`${apiUrl}/trainings/${session.id}`)
       .then(() => {
         toaster.create({
           title: "Training session deleted successfully",
           description: "The training session has been removed.",
           duration: 3000,
         });
-        window.location.reload(); // Reload the page to reflect changes
+        if (fetchTrainingSessions) {
+          fetchTrainingSessions();
+        }
       })
       .catch((error) => {
         console.error("Error deleting training session:", error);

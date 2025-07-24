@@ -10,10 +10,11 @@ const UpcomingTrainingSessions = () => {
   const [trainingSessions, setTrainingSessions] = useState<Training[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [isError, setIsError] = useState<boolean>(false);
-  useEffect(() => {
+
+  const fetchTrainingSessions = () => {
     const apiUrl = import.meta.env.VITE_API_BASE_URL;
     axios
-      .get(apiUrl + "/trainings", {
+      .get(`${apiUrl}/trainings`, {
         headers: {
           "Access-Control-Allow-Origin": "*",
           "Content-Type": "application/json",
@@ -29,6 +30,10 @@ const UpcomingTrainingSessions = () => {
         setIsLoading(false);
         setIsError(true);
       });
+  };
+
+  useEffect(() => {
+    fetchTrainingSessions();
   }, []);
   if (isError) {
     return (
@@ -71,7 +76,11 @@ const UpcomingTrainingSessions = () => {
           <Card.Body>
             {trainingSessions.length > 0 &&
               trainingSessions.map((session) => (
-                <TrainingSession key={session.id} session={session} />
+                <TrainingSession
+                  key={session.id}
+                  session={session}
+                  fetchTrainingSessions={fetchTrainingSessions}
+                />
               ))}
           </Card.Body>
         </>
