@@ -1,26 +1,17 @@
+import { useUser } from "@/context/UserContext";
 import {
   Avatar,
   Box,
-  Button,
   Flex,
-  Icon,
   IconButton,
   Menu,
   Portal,
   Text,
 } from "@chakra-ui/react";
-import type { ViewTab } from "./types";
-import { FaGlobe } from "react-icons/fa";
-import { useLanguage } from "@/context/LanguageContext";
-import { useUser } from "@/context/UserContext";
 import { useNavigate } from "react-router-dom";
 
 const Navbar = () => {
-  const { user, setUser } = useUser();
-  const onTabChange = (tab: ViewTab) => {
-    setUser(tab);
-  };
-  const { language, setLanguage } = useLanguage();
+  const { setUser } = useUser();
   const navigate = useNavigate();
   return (
     <Flex
@@ -39,42 +30,6 @@ const Navbar = () => {
         </Text>
       </Flex>
       <Flex gap={4} alignItems={"center"}>
-        <Flex gap={2} alignItems={"center"}>
-          <Icon size="md">
-            <FaGlobe />
-          </Icon>
-          <Button
-            bg={language === "hr" ? "black" : "white"}
-            color={language === "hr" ? "white" : "gray.800"}
-            onClick={() => setLanguage("hr")}
-          >
-            HR
-          </Button>
-          <Button
-            bg={language === "en" ? "black" : "white"}
-            color={language === "en" ? "white" : "gray.800"}
-            onClick={() => setLanguage("en")}
-          >
-            EN
-          </Button>
-        </Flex>
-        <Text>View as: </Text>
-        <Flex align="stretch" gap={2} flexWrap="wrap">
-          <Button
-            bg={user === "client" ? "black" : "white"}
-            color={user === "client" ? "white" : "gray.800"}
-            onClick={() => onTabChange("client")}
-          >
-            Client
-          </Button>
-          <Button
-            bg={user === "coach" ? "black" : "white"}
-            color={user === "coach" ? "white" : "gray.800"}
-            onClick={() => onTabChange("coach")}
-          >
-            Coach
-          </Button>
-        </Flex>
         <Box position="relative">
           <Menu.Root positioning={{ placement: "top-end" }}>
             <Menu.Trigger asChild>
