@@ -9,18 +9,19 @@ import {
   Card,
   Container,
 } from "@chakra-ui/react";
+import axios from "axios";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const Login = () => {
-  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isInvalid, setIsInvalid] = useState(false);
   const { setUser } = useUser();
   const navigate = useNavigate();
 
-  const handleUsernameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setUsername(event.target.value);
+  const handleEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setEmail(event.target.value);
   };
 
   const handlePasswordChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -28,14 +29,18 @@ const Login = () => {
   };
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    if (username.trim() === "admin" && password.trim() === "admin") {
-      setUser("coach");
-      //navigate to the main page with the router dom
-      navigate("/");
-    } else {
-      setIsInvalid(true);
-      alert("Invalid username or password");
-    }
+    const apiUrl = import.meta.env.VITE_API_BASE_URL;
+    axios
+      .post(`${apiUrl}/auth/login`, { email, password })
+      .then((response) => {
+        const { user } = response.data;
+        setUser(user);
+        navigate("/");
+      })
+      .catch(() => {
+        setIsInvalid(true);
+        alert("Invalid username or password");
+      });
   };
 
   return (
@@ -54,14 +59,14 @@ const Login = () => {
           <Box my={4} textAlign="left">
             <form onSubmit={handleSubmit}>
               <Field.Root>
-                <Field.Label>Username</Field.Label>
+                <Field.Label>Email</Field.Label>
                 <Input
-                  onChange={handleUsernameChange}
-                  type="text"
-                  placeholder="Enter your username"
+                  onChange={handleEmailChange}
+                  type="email"
+                  placeholder="Enter your email"
                 />
                 {isInvalid && (
-                  <Field.ErrorText>Username is required</Field.ErrorText>
+                  <Field.ErrorText>Email is required</Field.ErrorText>
                 )}
               </Field.Root>
               <Field.Root>

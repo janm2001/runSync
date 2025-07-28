@@ -1,6 +1,15 @@
+import type { Athlete } from "@/data/dummyData";
 import { createContext, useContext, useState, type ReactNode } from "react";
 
-type User = "client" | "coach";
+interface User {
+  id: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  role: "coach" | "client";
+  clientInfo: Athlete | null;
+  coachInfo: Athlete | null;
+}
 
 interface UserContextType {
   user: User | null;
@@ -8,11 +17,11 @@ interface UserContextType {
 }
 
 const UserContext = createContext<UserContextType | undefined>({
-  user: "client",
+  user: null,
   setUser: () => {},
 });
 
-export const UserPrvoider = ({ children }: { children: ReactNode }) => {
+export const UserProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
 
   return (
