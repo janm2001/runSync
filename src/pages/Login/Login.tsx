@@ -10,15 +10,24 @@ import {
   Container,
 } from "@chakra-ui/react";
 import axios from "axios";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isInvalid, setIsInvalid] = useState(false);
-  const { setUser } = useUser();
+  const [shouldNavigate, setShouldNavigate] = useState(false);
+  const { setUser, user } = useUser();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (shouldNavigate && user) {
+      console.log("User logged in:", user);
+      navigate("/");
+      setShouldNavigate(false);
+    }
+  }, [user, shouldNavigate, navigate]);
 
   const handleEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(event.target.value);
@@ -33,9 +42,8 @@ const Login = () => {
     axios
       .post(`${apiUrl}/auth/login`, { email, password })
       .then((response) => {
-        const { user } = response.data;
-        setUser(user);
-        navigate("/");
+        setUser(response.data);
+        setShouldNavigate(true);
       })
       .catch(() => {
         setIsInvalid(true);

@@ -12,13 +12,8 @@ import Settings from "./pages/Settings/Settings";
 import Profile from "./pages/Profile/Profile";
 import Login from "./pages/Login/Login";
 import { LanguageProvider } from "./context/LanguageContext";
-import { UserProvider, useUser } from "./context/UserContext"; // Corrected typo: UserProvider
+import { UserProvider, useUser } from "./context/UserContext";
 
-/**
- * This component acts as a layout wrapper.
- * It includes the Navbar and an <Outlet />. The <Outlet /> is a placeholder
- * where React Router will render the matched child route (e.g., Profile, Settings).
- */
 const NavbarLayout = () => {
   return (
     <>
@@ -33,10 +28,10 @@ const NavbarLayout = () => {
 const MainPage = () => {
   const { user } = useUser();
   console.log("Current user:", user);
-  if (user?.role === "client") {
+  if (user?.role === 2) {
     return <Client />;
   }
-  if (user?.role === "coach") {
+  if (user?.role === 1) {
     return <Coach />;
   }
   return <div>Loading user information...</div>;
@@ -46,7 +41,7 @@ const ProtectedRoute = () => {
   const { user } = useUser();
 
   // Check if the user is either a 'client' or a 'coach'
-  if (user?.role !== "client" && user?.role !== "coach") {
+  if (user?.role !== 1 && user?.role !== 2) {
     // If not, redirect them to the /login page
     return <Navigate to="/login" replace />;
   }
