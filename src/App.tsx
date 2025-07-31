@@ -27,8 +27,7 @@ const NavbarLayout = () => {
 
 const MainPage = () => {
   const { user } = useUser();
-  console.log("Current user:", user);
-  if (user?.role === 2) {
+  if (user?.role === 0) {
     return <Client />;
   }
   if (user?.role === 1) {
@@ -41,7 +40,7 @@ const ProtectedRoute = () => {
   const { user } = useUser();
 
   // Check if the user is either a 'client' or a 'coach'
-  if (user?.role !== 1 && user?.role !== 2) {
+  if (user?.role !== 1 && user?.role !== 0) {
     // If not, redirect them to the /login page
     return <Navigate to="/login" replace />;
   }

@@ -11,7 +11,7 @@ import {
 import { useNavigate } from "react-router-dom";
 
 const Navbar = () => {
-  const { setUser } = useUser();
+  const { user, setUser } = useUser();
   const navigate = useNavigate();
   return (
     <Flex
@@ -39,7 +39,9 @@ const Navbar = () => {
                 rounded={"full"}
               >
                 <Avatar.Root>
-                  <Avatar.Fallback name="Coach Jan"></Avatar.Fallback>
+                  <Avatar.Fallback
+                    name={user?.firstName + " " + user?.lastName || "User"}
+                  ></Avatar.Fallback>
                 </Avatar.Root>
               </IconButton>
             </Menu.Trigger>

@@ -124,7 +124,7 @@ const TrainingSession = ({
               </Tag.Root>
               <Flex gap={2}>
                 {dialogComponent()}
-                {user === "coach" && (
+                {user?.role === 1 && (
                   <Button variant={"outline"} onClick={deleteSession}>
                     <Icon size="md">
                       <FaTrash />
