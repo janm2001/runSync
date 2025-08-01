@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 // Your Strava Client ID from your Strava API settings
 const STRAVA_CLIENT_ID = "138776";
 // Add your client secret (in production, this should be handled by your backend)
-const STRAVA_CLIENT_SECRET = "72b6bb459a3c10cbf7664e0eaf9f068d0b6c5f1"; // You need to add this
+const STRAVA_CLIENT_SECRET = "f72b6bb459a3c10cbf7664e0eaf9f068d0b6c5f1"; // You need to add this
 // Update this to your frontend URL for the callback
 const REDIRECT_URI = "http://localhost:5173"; // Changed from /strava/callback to main page
 
