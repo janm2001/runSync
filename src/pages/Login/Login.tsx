@@ -22,6 +22,30 @@ const Login = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
+    if (user) {
+      console.log("User already authenticated:", user);
+      navigate("/");
+      return;
+    }
+
+    // Check if user is authenticated via stored data but context hasn't loaded yet
+    const storedAuth = localStorage.getItem("user_authenticated");
+    const storedUser = localStorage.getItem("user_data");
+    if (storedAuth === "true" && storedUser) {
+      try {
+        const parsedUser = JSON.parse(storedUser);
+        setUser(parsedUser);
+        navigate("/");
+        return;
+      } catch (error) {
+        console.error("Failed to parse stored user data:", error);
+        localStorage.removeItem("user_data");
+        localStorage.removeItem("user_authenticated");
+      }
+    }
+  }, [user, setUser, navigate]);
+
+  useEffect(() => {
     if (shouldNavigate && user) {
       console.log("User logged in:", user);
       navigate("/");

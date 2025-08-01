@@ -39,8 +39,17 @@ const MainPage = () => {
 const ProtectedRoute = () => {
   const { user } = useUser();
 
+  // Check localStorage for authentication while context is loading
+  const storedAuth = localStorage.getItem("user_authenticated");
+  const storedUser = localStorage.getItem("user_data");
+
+  // If we have stored auth but no user in context yet, show loading
+  if (storedAuth === "true" && storedUser && !user) {
+    return <div>Loading user information...</div>;
+  }
+
   // Check if the user is either a 'client' or a 'coach'
-  if (user?.role !== 1 && user?.role !== 0) {
+  if (!user || (user.role !== 1 && user.role !== 0)) {
     // If not, redirect them to the /login page
     return <Navigate to="/login" replace />;
   }
