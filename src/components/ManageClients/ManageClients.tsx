@@ -1,9 +1,23 @@
-import { Card, EmptyState, SkeletonText, VStack } from "@chakra-ui/react";
+import {
+  Button,
+  Card,
+  CloseButton,
+  Dialog,
+  EmptyState,
+  Flex,
+  Grid,
+  Icon,
+  Input,
+  Portal,
+  SkeletonText,
+  VStack,
+} from "@chakra-ui/react";
 import ClientCard from "../ClientCard/ClientCard";
 import { useEffect, useState } from "react";
 import { type Athlete } from "@/data/dummyData";
 import axios from "axios";
 import { HiColorSwatch } from "react-icons/hi";
+import { FaEye } from "react-icons/fa";
 
 const ManageClients = () => {
   const [clients, setClients] = useState<Athlete[]>([]);
@@ -29,6 +43,48 @@ const ManageClients = () => {
         setIsError(true);
       });
   }, []);
+
+  const dialogComponent = () => {
+    return (
+      <Dialog.Root size="lg" placement="center" motionPreset="slide-in-bottom">
+        <Dialog.Trigger asChild>
+          <Button variant="outline" colorScheme="blue">
+            Add New Client
+          </Button>
+        </Dialog.Trigger>
+        <Portal>
+          <Dialog.Backdrop />
+          <Dialog.Positioner>
+            <Dialog.Content>
+              <Dialog.Header>
+                <Dialog.Title>Add a client</Dialog.Title>
+                <Dialog.CloseTrigger asChild>
+                  <CloseButton size="sm" />
+                </Dialog.CloseTrigger>
+              </Dialog.Header>
+              <Dialog.Body>
+                <Grid
+                  templateColumns="repeat(2, 1fr)"
+                  p={4}
+                  gap={4}
+                  alignItems="flex-start"
+                >
+                  {/* Add form or content for adding a client here */}
+                  <p>Form to add a new client will go here.</p>
+                  <VStack gap={4}>
+                    <Input placeholder="Client Name" />
+                    <Input placeholder="Client Email" />
+                    <Input placeholder="Client Phone" />
+                  </VStack>
+                </Grid>
+              </Dialog.Body>
+            </Dialog.Content>
+          </Dialog.Positioner>
+        </Portal>
+      </Dialog.Root>
+    );
+  };
+
   if (isError) {
     return (
       <Card.Root p={2}>
@@ -62,6 +118,9 @@ const ManageClients = () => {
             <Card.Description>
               Track and grade individual athlete performance
             </Card.Description>
+            <Flex justifyContent="flex-end" mt={4}>
+              {dialogComponent()}
+            </Flex>
           </Card.Header>
           <Card.Body>
             {clients.length > 0 &&
