@@ -1,4 +1,6 @@
 import { useEffect, useState } from "react";
+import StravaActivity from "./StravaActivity/StravaActivity";
+import { Grid } from "@chakra-ui/react";
 
 // Your Strava Client ID from your Strava API settings
 const STRAVA_CLIENT_ID = "138776";
@@ -258,19 +260,17 @@ const StravaSync = () => {
           ) : error ? (
             <p style={{ color: "red" }}>Error: {error}</p>
           ) : activities.length > 0 ? (
-            <ul>
+            <Grid templateColumns="repeat(2, 1fr)" gap={6}>
               {activities.map((activity: StravaActivity) => (
-                <li key={activity.id} style={{ marginBottom: "10px" }}>
-                  <strong>{activity.name}</strong> - {activity.type}
-                  <br />
-                  Date: {new Date(activity.start_date).toLocaleDateString()}
-                  <br />
-                  Distance: {(activity.distance / 1000).toFixed(2)} km
-                  <br />
-                  Duration: {Math.floor(activity.moving_time / 60)} minutes
-                </li>
+                <StravaActivity
+                  key={activity.id}
+                  name={activity.name}
+                  startDate={new Date(activity.start_date).toLocaleString()}
+                  distance={(activity.distance / 1000).toFixed(2)} // Convert meters to kilometers
+                  duration={(activity.moving_time / 60).toFixed(2)} // Convert seconds to minutes
+                />
               ))}
-            </ul>
+            </Grid>
           ) : (
             <p>No recent activities found.</p>
           )}
