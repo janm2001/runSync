@@ -60,10 +60,11 @@ const Attendances = () => {
       console.error("Selected training not found");
       return;
     }
+    const apiUrl = import.meta.env.VITE_API_BASE_URL;
     await axios
-      .put(`http://localhost:3000/trainings/${selectedTraining}`, {
+      .put(`${apiUrl}/trainings/${selectedTraining}`, {
         ...targetedTraining,
-        attendance: attendances,
+        attendance: attendances.map((id) => id.toString()),
       })
       .then(() => {
         toaster.create({
