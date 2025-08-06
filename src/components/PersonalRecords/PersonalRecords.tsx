@@ -1,6 +1,7 @@
 import { Card, Icon } from "@chakra-ui/react";
 import { FaTable } from "react-icons/fa";
 import PersonalRecordCard from "./PersonalRecordCard";
+import DownloadTimes from "../DownloadTimes/DownloadTimes";
 const PersonalRecords = () => {
   return (
     <Card.Root p={2}>
@@ -31,6 +32,7 @@ const PersonalRecords = () => {
           description="Goal time"
           improvement="Target"
         />
+        <DownloadTimes />
       </Card.Body>
     </Card.Root>
   );
