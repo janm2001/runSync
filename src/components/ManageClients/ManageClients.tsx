@@ -6,7 +6,6 @@ import {
   EmptyState,
   Flex,
   Grid,
-  Icon,
   Input,
   Portal,
   SkeletonText,
@@ -17,7 +16,6 @@ import { useEffect, useState } from "react";
 import { type Athlete } from "@/data/dummyData";
 import axios from "axios";
 import { HiColorSwatch } from "react-icons/hi";
-import { FaEye } from "react-icons/fa";
 
 const ManageClients = () => {
   const [clients, setClients] = useState<Athlete[]>([]);

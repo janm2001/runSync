@@ -39,23 +39,7 @@ const Settings = () => {
           EN
         </Button>
       </Flex>
-      <Text>View as: </Text>
-      <Flex align="stretch" gap={2} flexWrap="wrap">
-        <Button
-          bg={user === "client" ? "black" : "white"}
-          color={user === "client" ? "white" : "gray.800"}
-          onClick={() => onTabChange("client")}
-        >
-          Client
-        </Button>
-        <Button
-          bg={user === "coach" ? "black" : "white"}
-          color={user === "coach" ? "white" : "gray.800"}
-          onClick={() => onTabChange("coach")}
-        >
-          Coach
-        </Button>
-      </Flex>
+
       <Button
         mt={4}
         variant="outline"
