@@ -1,15 +1,9 @@
-import type { ViewTab } from "@/components/Navbar/types";
 import { useLanguage } from "@/context/LanguageContext";
-import { useUser } from "@/context/UserContext";
-import { Flex, Heading, Icon, VStack, Button, Text } from "@chakra-ui/react";
+import { Flex, Heading, Icon, VStack, Button } from "@chakra-ui/react";
 import { FaGlobe } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 
 const Settings = () => {
-  const { user, setUser } = useUser();
-  const onTabChange = (tab: ViewTab) => {
-    setUser(tab);
-  };
   const { language, setLanguage } = useLanguage();
   const navigate = useNavigate();
   const navigateToMainPage = () => {
