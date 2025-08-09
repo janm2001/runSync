@@ -22,7 +22,6 @@ const TrainingSession = ({
   fetchTrainingSessions,
 }: ITrainingSessionCard) => {
   const { user } = useUser();
-  console.log("Training session:", session);
   const deleteSession = () => {
     const apiUrl = import.meta.env.VITE_API_BASE_URL;
     axios
