@@ -2,15 +2,49 @@
   "PersonalBests": [
     {
       "userId": "u2",
-      "fiveKPB": "22:54",
-      "tenKPB": "45:12",
-      "halfPB": "1:30:00"
+      "records": [
+        {
+          "time": "20:30",
+          "date": "2023-10-01",
+          "title": "5K Personal Best",
+          "improvement": "1:15"
+        },
+        {
+          "time": "42:15",
+          "date": "2023-09-15",
+          "title": "10K Personal Best",
+          "improvement": "2:30"
+        },
+        {
+          "time": "1:25:00",
+          "date": "2023-08-20",
+          "title": "Half Marathon Personal Best",
+          "improvement": "3:00"
+        }
+      ]
     },
     {
       "userId": "u3",
-      "fiveKPB": "20:30",
-      "tenKPB": "42:15",
-      "halfPB": "1:25:00"
+      "records": [
+        {
+          "time": "20:30",
+          "date": "2023-10-01",
+          "title": "5K Personal Best",
+          "improvement": "1:15"
+        },
+        {
+          "time": "42:15",
+          "date": "2023-09-15",
+          "title": "10K Personal Best",
+          "improvement": "2:30"
+        },
+        {
+          "time": "1:25:00",
+          "date": "2023-08-20",
+          "title": "Half Marathon Personal Best",
+          "improvement": "3:00"
+        }
+      ]
     }
   ]
 }

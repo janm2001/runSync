@@ -6,28 +6,33 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { useUser } from "@/context/UserContext";
 
-export interface PersonalRecord {
-  userId: string;
-  fiveKPB: string;
-  tenKPB: string;
-  halfPB: string;
+export interface Record {
+  time: string;
+  date: string;
+  title: string;
+  improvement: string;
 }
+
+export interface UserPersonalBests {
+  userId: string;
+  records: Record[]; // Simple array of records
+}
+
 const PersonalRecords = () => {
-  const [records, setRecords] = useState<PersonalRecord | null>(null);
+  const [records, setRecords] = useState<Record[] | null>(null);
   const { user } = useUser();
   const fetchRecords = async () => {
     try {
       await axios
         .get("http://localhost:3000/PersonalBests")
         .then((response) => {
-          //only get the current user's records
           if (!user) return;
-          console.log(user.id);
-          console.log(response.data);
           const userRecords = response.data.find(
-            (record: PersonalRecord) => record.userId === user.id
+            (data: UserPersonalBests) => data.userId === user.id
           );
-          if (userRecords) setRecords(userRecords);
+          if (userRecords) {
+            setRecords(userRecords.records);
+          }
         });
     } catch (error) {
       console.error("Error fetching personal records:", error);
@@ -35,7 +40,8 @@ const PersonalRecords = () => {
   };
   useEffect(() => {
     fetchRecords();
-  }, []);
+  }, [user]);
+
   return (
     <Card.Root p={2}>
       <Card.Header>
@@ -52,25 +58,25 @@ const PersonalRecords = () => {
             Edit Records
           </Button>
         </Flex>
-        {records && (
+        {records && records.length >= 3 && (
           <>
             <PersonalRecordCard
               title="5K Personal Best"
-              time={records.fiveKPB || "N/A"}
-              description="Set 2 weeks ago"
-              improvement="-30 sec"
+              time={records[0]?.time || "N/A"}
+              description={`Set ${records[0]?.date}`}
+              improvement={records[0]?.improvement}
             />
             <PersonalRecordCard
               title="10K Personal Best"
-              time={records.tenKPB || "N/A"}
-              description="Set 1 month ago"
-              improvement=""
+              time={records[1]?.time || "N/A"}
+              description={`Set ${records[1]?.date}`}
+              improvement={records[1]?.improvement}
             />
             <PersonalRecordCard
-              title="Half Marathon"
-              time={records.halfPB || "N/A"}
-              description="Goal time"
-              improvement="Target"
+              title="Half Marathon Personal Best"
+              time={records[2]?.time || "N/A"}
+              description={`Set ${records[2]?.date}`}
+              improvement={records[2]?.improvement}
             />
           </>
         )}
