@@ -27,6 +27,7 @@ const initialState: ICreateTrainingForm = {
   distance: 0,
   attendance: [],
   description: "",
+  pace: "",
 };
 const formReducer = (
   state: ICreateTrainingForm,
@@ -54,8 +55,6 @@ const formReducer = (
 const CreateTrainingForm = () => {
   const [state, dispatch] = useReducer(formReducer, initialState);
 
-  // A generic handler to update any field.
-  // It creates an action object and sends it to the reducer via dispatch.
   const handleFieldChange = (
     field: keyof ICreateTrainingForm,
     value: string | number
@@ -70,23 +69,97 @@ const CreateTrainingForm = () => {
     dispatch({ type: "SET_INTERVALS", payload: intervals });
   };
 
+  const calculateRunningMetrics = async (
+    distance: number,
+    duration: number
+  ) => {
+    try {
+      const soapEnvelope = `<?xml version="1.0" encoding="utf-8"?>
+<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+  <soap:Body>
+    <Calculate xmlns="http://www.dneonline.com/calculator.asmx">
+      <operation>divide</operation>
+      <x>${duration}</x>
+      <y>${distance}</y>
+    </Calculate>
+  </soap:Body>
+</soap:Envelope>`;
+
+      const response = await axios.post(
+        "http://www.dneonline.com/calculator.asmx",
+        soapEnvelope,
+        {
+          headers: {
+            "Content-Type": "text/xml; charset=utf-8",
+            SOAPAction: "http://www.dneonline.com/calculator.asmx/Calculate",
+            "Access-Control-Allow-Origin": "*",
+            "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
+            "Access-Control-Allow-Headers": "Content-Type, SOAPAction",
+          },
+          timeout: 10000,
+        }
+      );
+
+      const parser = new DOMParser();
+      const xmlDoc = parser.parseFromString(response.data, "text/xml");
+      const result =
+        xmlDoc.getElementsByTagName("CalculateResult")[0]?.textContent;
+
+      if (result) {
+        const decimalMinutes = parseFloat(result);
+        const minutes = Math.floor(decimalMinutes);
+        const seconds = Math.round((decimalMinutes - minutes) * 60);
+        return `${minutes}:${seconds.toString().padStart(2, "0")}`;
+      }
+      return "0:00";
+    } catch (error) {
+      console.error("Error calculating pace:", error);
+      if (distance > 0) {
+        const decimalMinutes = duration / distance;
+        const minutes = Math.floor(decimalMinutes);
+        const seconds = Math.round((decimalMinutes - minutes) * 60);
+        return `${minutes}:${seconds.toString().padStart(2, "0")}`;
+      }
+      return "0:00";
+    }
+  };
+
   // Handler for the form submission.
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const apiUrl = import.meta.env.VITE_API_BASE_URL;
-    axios
-      .post(`${apiUrl}/trainings`, state)
-      .then(() => {
-        toaster.create({
-          title: "Training Session Created",
-          description: "Your training session has been successfully created.",
-          duration: 3000,
-        });
-      })
-      .catch((error) => {
-        console.error("Error creating training session:", error.response);
+
+    try {
+      const pace = await calculateRunningMetrics(
+        state.distance,
+        state.duration
+      );
+      const apiUrl = import.meta.env.VITE_API_BASE_URL;
+      await axios.post(
+        `${apiUrl}/trainings`,
+        { ...state, pace: pace },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            "Access-Control-Allow-Origin": "*",
+          },
+        }
+      );
+
+      toaster.create({
+        title: "Training Session Created",
+        description: "Your training session has been successfully created.",
+        duration: 3000,
       });
-    dispatch({ type: "RESET_FORM" });
+
+      dispatch({ type: "RESET_FORM" });
+    } catch (error) {
+      console.error("Error creating training session:", error);
+      toaster.create({
+        title: "Error",
+        description: "Failed to create training session. Please try again.",
+        duration: 3000,
+      });
+    }
   };
 
   return (

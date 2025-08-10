@@ -14,7 +14,8 @@ export interface ICreateTrainingForm {
   duration: number;
   distance: number;
   description: string;
-  attendance: string[]; // Array of user IDs attending the training
+  attendance: string[];
+  pace?: string;
 }
 
 export interface IInterval {
