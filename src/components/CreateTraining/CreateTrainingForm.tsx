@@ -69,34 +69,27 @@ const CreateTrainingForm = () => {
     dispatch({ type: "SET_INTERVALS", payload: intervals });
   };
 
+  // ...existing code...
   const calculateRunningMetrics = async (
     distance: number,
     duration: number
   ) => {
+    if (distance <= 0) {
+      return "0:00";
+    }
+
     try {
-      const soapEnvelope = `<?xml version="1.0" encoding="utf-8"?>
-<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
-  <soap:Body>
-    <Calculate xmlns="http://www.dneonline.com/calculator.asmx">
-      <operation>divide</operation>
-      <x>${duration}</x>
-      <y>${distance}</y>
-    </Calculate>
-  </soap:Body>
-</soap:Envelope>`;
+      const apiUrl = import.meta.env.VITE_API_BASE_URL;
+      const proxyApiUrl = `${apiUrl}/pace`;
 
       const response = await axios.post(
-        "http://www.dneonline.com/calculator.asmx",
-        soapEnvelope,
+        proxyApiUrl,
+        { distance, duration },
         {
           headers: {
-            "Content-Type": "text/xml; charset=utf-8",
-            SOAPAction: "http://www.dneonline.com/calculator.asmx/Calculate",
+            "Content-Type": "application/json",
             "Access-Control-Allow-Origin": "*",
-            "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
-            "Access-Control-Allow-Headers": "Content-Type, SOAPAction",
           },
-          timeout: 10000,
         }
       );
 
@@ -113,7 +106,8 @@ const CreateTrainingForm = () => {
       }
       return "0:00";
     } catch (error) {
-      console.error("Error calculating pace:", error);
+      console.error("Error calculating pace via proxy:", error);
+      // Fallback calculation if the proxy fails
       if (distance > 0) {
         const decimalMinutes = duration / distance;
         const minutes = Math.floor(decimalMinutes);
