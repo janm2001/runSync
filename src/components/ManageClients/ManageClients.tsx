@@ -4,9 +4,11 @@ import {
   CloseButton,
   Dialog,
   EmptyState,
+  Field,
   Flex,
   Grid,
   Input,
+  NativeSelect,
   Portal,
   SkeletonText,
   VStack,
@@ -72,7 +74,22 @@ const ManageClients = () => {
                   <VStack gap={4}>
                     <Input placeholder="Client Name" />
                     <Input placeholder="Client Email" />
-                    <Input placeholder="Client Phone" />
+                    {/* Group Select */}
+                    <Field.Root required>
+                      <Field.Label htmlFor="group">Group</Field.Label>
+                      <NativeSelect.Root>
+                        <NativeSelect.Field
+                          id="group"
+                          placeholder="Select a group"
+                        >
+                          <option value="spansko 6">Spansko 6</option>
+                          <option value="spansko 5">Spansko 5</option>
+                          <option value="spansko 4">Spansko 4</option>
+                          <option value="spansko 3">Spansko 3</option>
+                        </NativeSelect.Field>
+                      </NativeSelect.Root>
+                    </Field.Root>
+                    <Input placeholder="Client Group" />
                   </VStack>
                 </Grid>
               </Dialog.Body>
