@@ -6,7 +6,6 @@ import {
   EmptyState,
   Field,
   Flex,
-  Grid,
   Input,
   NativeSelect,
   Portal,
@@ -25,7 +24,7 @@ const initialAthleteState = {
   email: "",
   group: "",
   joinDate: new Date().toISOString().split("T")[0],
-  isActiveAthlete: true,
+  attendance: 0, // Added to match backend model
 };
 
 const ManageClients = () => {
@@ -41,6 +40,7 @@ const ManageClients = () => {
     axios
       .get(`${apiUrl}/athletes`)
       .then((response) => {
+        console.log(response);
         setClients(response.data.athletes || response.data);
         setIsLoading(false);
         setIsError(false);
@@ -60,14 +60,24 @@ const ManageClients = () => {
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
     const { name, value } = e.target;
-    setNewAthlete((prev) => ({ ...prev, [name]: value }));
+    const isBooleanField = name === "isActiveAthlete";
+    setNewAthlete((prev) => ({
+      ...prev,
+      [name]: isBooleanField ? value === "true" : value,
+    }));
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const apiUrl = import.meta.env.VITE_API_BASE_URL;
     try {
-      await axios.post(`${apiUrl}/athletes`, newAthlete);
+      // Ensure attendance is a number before sending
+      const athleteData = {
+        ...newAthlete,
+        attendance: Number(newAthlete.attendance) || 0,
+      };
+      console.log("Submitting athlete data:", athleteData); // Log the data
+      await axios.post(`${apiUrl}/athletes`, athleteData);
       toaster.create({
         title: "Athlete Created",
         description: "Your athlete has been successfully created.",
@@ -78,11 +88,28 @@ const ManageClients = () => {
       fetchAthletes();
     } catch (error) {
       console.error("Failed to create athlete", error);
-      toaster.error({
-        title: "Athlete Creation Failed",
-        description: "There was an error creating your athlete.",
-        duration: 3000,
-      });
+
+      // Enhanced error logging to show backend validation errors
+      if (axios.isAxiosError(error) && error.response) {
+        console.error("Backend Response Error:", error.response.data);
+        const errorData = error.response.data;
+        // ASP.NET Core validation errors are often in an 'errors' object.
+        const errorMessages = errorData.errors
+          ? JSON.stringify(errorData.errors)
+          : "Check the console for the full error object.";
+
+        toaster.error({
+          title: "Athlete Creation Failed",
+          description: `The server responded with an error: ${errorMessages}`,
+          duration: 5000, // Give more time to read
+        });
+      } else {
+        toaster.error({
+          title: "Athlete Creation Failed",
+          description: "An unexpected error occurred. Check the console.",
+          duration: 3000,
+        });
+      }
     }
   };
 
@@ -110,73 +137,53 @@ const ManageClients = () => {
                 </Dialog.CloseTrigger>
               </Dialog.Header>
               <Dialog.Body>
-                <Grid
-                  templateColumns={{ base: "1fr", md: "repeat(2, 1fr)" }}
-                  p={4}
-                  gap={4}
-                  alignItems="flex-start"
-                >
-                  <VStack gap={4}>
-                    <Field.Root>
-                      <Field.Label>Name</Field.Label>
-                      <Input
-                        name="name"
-                        value={newAthlete.name}
+                <VStack gap={4}>
+                  <Field.Root>
+                    <Field.Label>Name</Field.Label>
+                    <Input
+                      name="name"
+                      value={newAthlete.name}
+                      onChange={handleFormChange}
+                      placeholder="Athlete's name"
+                    />
+                  </Field.Root>
+                  <Field.Root>
+                    <Field.Label>Email</Field.Label>
+                    <Input
+                      type="email"
+                      name="email"
+                      value={newAthlete.email}
+                      onChange={handleFormChange}
+                      placeholder="Athlete's email"
+                    />
+                  </Field.Root>
+                  <Field.Root>
+                    <Field.Label>Group</Field.Label>
+                    <NativeSelect.Root>
+                      <NativeSelect.Field
+                        name="group"
+                        value={newAthlete.group}
                         onChange={handleFormChange}
-                        placeholder="Athlete's name"
-                      />
-                    </Field.Root>
-                    <Field.Root>
-                      <Field.Label>Email</Field.Label>
-                      <Input
-                        type="email"
-                        name="email"
-                        value={newAthlete.email}
-                        onChange={handleFormChange}
-                        placeholder="Athlete's email"
-                      />
-                    </Field.Root>
-                    <Field.Root>
-                      <Field.Label>Group</Field.Label>
-                      <NativeSelect.Root>
-                        <NativeSelect.Field
-                          name="group"
-                          value={newAthlete.group}
-                          onChange={handleFormChange}
-                        >
-                          <option value="">Select group</option>
-                          <option value="Beginner Group">Beginner Group</option>
-                          <option value="Intermediate Group">
-                            Intermediate Group
-                          </option>
-                          <option value="Advanced Group">Advanced Group</option>
-                        </NativeSelect.Field>
-                      </NativeSelect.Root>
-                    </Field.Root>
-                    <Field.Root>
-                      <Field.Label>Group</Field.Label>
-                      <NativeSelect.Root>
-                        <NativeSelect.Field
-                          name="isActiveAthlete"
-                          value={newAthlete.isActiveAthlete ? "true" : "false"}
-                          onChange={handleFormChange}
-                        >
-                          <option value="true">Active</option>
-                          <option value="false">Inactive</option>
-                        </NativeSelect.Field>
-                      </NativeSelect.Root>
-                    </Field.Root>
-                    <Field.Root>
-                      <Field.Label>Join Date</Field.Label>
-                      <Input
-                        type="date"
-                        name="joinDate"
-                        value={newAthlete.joinDate}
-                        onChange={handleFormChange}
-                      />
-                    </Field.Root>
-                  </VStack>
-                </Grid>
+                      >
+                        <option value="">Select group</option>
+                        <option value="spansko 2">Spansko 2</option>
+                        <option value="spansko 3">Spansko 3</option>
+                        <option value="spansko 4">Spansko 4</option>
+                        <option value="spansko 5">Spansko 5</option>
+                        <option value="spansko 6">Spansko 6</option>
+                      </NativeSelect.Field>
+                    </NativeSelect.Root>
+                  </Field.Root>
+                  <Field.Root>
+                    <Field.Label>Join Date</Field.Label>
+                    <Input
+                      type="date"
+                      name="joinDate"
+                      value={newAthlete.joinDate}
+                      onChange={handleFormChange}
+                    />
+                  </Field.Root>
+                </VStack>
               </Dialog.Body>
               <Dialog.Footer>
                 <Button
