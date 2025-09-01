@@ -14,6 +14,8 @@ export interface Athlete {
     };
     attendance: number;
     avatar?: string;
+    daysSinceJoining: number;
+    isActiveAthlete: boolean;
 }
 
 export interface Group {
@@ -72,7 +74,9 @@ export const athletes: Athlete[] = [
         improvement: "+12%",
         lastRun: "2 days ago",
         personalBests: { "5K": "25:30", "10K": "52:15", halfMarathon: "1:58:30" },
-        attendance: 85
+        attendance: 85,
+        daysSinceJoining: 30,
+        isActiveAthlete: true
     },
     {
         id: 2,
@@ -84,7 +88,9 @@ export const athletes: Athlete[] = [
         improvement: "+8%",
         lastRun: "1 day ago",
         personalBests: { "5K": "21:45", "10K": "45:20", halfMarathon: "1:42:15" },
-        attendance: 92
+        attendance: 92,
+        daysSinceJoining: 30,
+        isActiveAthlete: true
     },
     {
         id: 3,
@@ -96,7 +102,9 @@ export const athletes: Athlete[] = [
         improvement: "+15%",
         lastRun: "Today",
         personalBests: { "5K": "19:30", "10K": "40:45", halfMarathon: "1:28:30" },
-        attendance: 96
+        attendance: 96,
+        daysSinceJoining: 30,
+        isActiveAthlete: true
     },
     {
         id: 4,
@@ -108,7 +116,9 @@ export const athletes: Athlete[] = [
         improvement: "+5%",
         lastRun: "3 days ago",
         personalBests: { "5K": "28:15", "10K": "58:30", halfMarathon: "2:15:45" },
-        attendance: 72
+        attendance: 72,
+        daysSinceJoining: 30,
+        isActiveAthlete: true
     },
     {
         id: 5,
@@ -120,7 +130,9 @@ export const athletes: Athlete[] = [
         improvement: "+18%",
         lastRun: "1 day ago",
         personalBests: { "5K": "22:30", "10K": "47:15", halfMarathon: "1:45:20" },
-        attendance: 88
+        attendance: 88,
+        daysSinceJoining: 30,
+        isActiveAthlete: true
     }
 ];
 

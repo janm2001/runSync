@@ -6,9 +6,9 @@ import { FaComment } from "react-icons/fa";
 const ClientCard = ({
   name,
   group,
-  lastRun,
-  performance,
-  improvement,
+  email,
+  daysSinceJoining,
+  isActiveAthlete,
 }: IClientCard) => {
   return (
     <Card.Root mt={4}>
@@ -21,16 +21,18 @@ const ClientCard = ({
         <Box>
           <Card.Title>{name}</Card.Title>
           <Card.Description>{group}</Card.Description>
-          <Card.Description>Last Run : {lastRun}</Card.Description>
+          <Card.Description>Email: {email}</Card.Description>
         </Box>
         <Box alignItems={"center"} display="flex" flexDirection="row" gap={4}>
           <VStack alignItems={"center"} justifyContent={"center"}>
-            <Text fontWeight={"bold"}>{performance}</Text>
-            <Text color="GrayText">Performance</Text>
+            <Text fontWeight={"bold"}>{daysSinceJoining ?? 0} days</Text>
+            <Text color="GrayText">Days Since Joining</Text>
           </VStack>
           <VStack alignItems={"center"} justifyContent={"center"}>
-            <Text color="green.300">{improvement}</Text>
-            <Text color="GrayText">Improvement</Text>
+            <Text color="green.300">
+              {isActiveAthlete ? "Active" : "Inactive"}
+            </Text>
+            <Text color="GrayText">Status</Text>
           </VStack>
           <Button variant={"outline"} colorScheme="blue">
             <Icon size="lg">

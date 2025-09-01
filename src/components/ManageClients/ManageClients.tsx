@@ -33,7 +33,8 @@ const ManageClients = () => {
         },
       })
       .then((response) => {
-        setClients(response.data);
+        console.log(response);
+        setClients(response.data.athletes);
         setIsLoading(false);
         setIsError(false);
       })
@@ -145,9 +146,9 @@ const ManageClients = () => {
                     key={athlete.id}
                     name={athlete.name}
                     group={athlete.group}
-                    lastRun={athlete.lastRun}
-                    performance={athlete.performance}
-                    improvement={athlete.improvement}
+                    email={athlete.email}
+                    isActiveAthlete={athlete.isActiveAthlete}
+                    daysSinceJoining={athlete.daysSinceJoining}
                   />
                 );
               })}
