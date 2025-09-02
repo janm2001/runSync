@@ -1,13 +1,16 @@
 import {
   Button,
+  ButtonGroup,
   Card,
   CloseButton,
   Dialog,
   EmptyState,
   Field,
   Flex,
+  IconButton,
   Input,
   NativeSelect,
+  Pagination,
   Portal,
   SkeletonText,
   VStack,
@@ -18,6 +21,7 @@ import type { Athlete } from "@/data/dummyData";
 import axios from "axios";
 import { HiColorSwatch } from "react-icons/hi";
 import { toaster } from "../ui/toaster";
+import { LuChevronLeft, LuChevronRight } from "react-icons/lu";
 
 const initialAthleteState = {
   name: "",
@@ -33,28 +37,45 @@ const ManageClients = () => {
   const [isError, setIsError] = useState<boolean>(false);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [newAthlete, setNewAthlete] = useState(initialAthleteState);
+  const [pagination, setPagination] = useState({
+    currentPage: 1,
+    pageSize: 10,
+    totalCount: 0,
+    totalPages: 1,
+  });
+  const [sortBy, setSortBy] = useState("name");
+  const [sortOrder, setSortOrder] = useState("asc");
+  const [filterGroup, setFilterGroup] = useState("");
 
-  const fetchAthletes = () => {
+  const fetchAthletes = (pageToFetch: number) => {
     setIsLoading(true);
     const apiUrl = import.meta.env.VITE_API_BASE_URL;
     axios
-      .get(`${apiUrl}/athletes`)
+      .get(`${apiUrl}/athletes`, {
+        params: {
+          sortBy,
+          sortOrder,
+          filterGroup: filterGroup || null,
+          page: pageToFetch,
+          pageSize: pagination.pageSize,
+        },
+      })
       .then((response) => {
         console.log(response);
         setClients(response.data.athletes || response.data);
+        setPagination(response.data.pagination);
         setIsLoading(false);
         setIsError(false);
       })
-      .catch((error) => {
-        console.error("Error fetching athletes data:", error);
+      .catch(() => {
         setIsLoading(false);
         setIsError(true);
       });
   };
 
   useEffect(() => {
-    fetchAthletes();
-  }, []);
+    fetchAthletes(pagination.currentPage);
+  }, [sortBy, sortOrder, filterGroup, pagination.currentPage]);
 
   const handleFormChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -85,7 +106,11 @@ const ManageClients = () => {
       });
       setNewAthlete(initialAthleteState);
       setIsDialogOpen(false);
-      fetchAthletes();
+      if (pagination.currentPage !== 1) {
+        setPagination((prev) => ({ ...prev, currentPage: 1 }));
+      } else {
+        fetchAthletes(1);
+      }
     } catch (error) {
       console.error("Failed to create athlete", error);
 
@@ -236,24 +261,103 @@ const ManageClients = () => {
             <Card.Description>
               Track and grade individual athlete performance
             </Card.Description>
-            <Flex justifyContent="flex-end" mt={4}>
+            <Flex justifyContent="space-between" alignItems="center" mt={4}>
+              <Flex gap={4}>
+                <NativeSelect.Root>
+                  <NativeSelect.Field
+                    value={`${sortBy}-${sortOrder}`}
+                    onChange={(e) => {
+                      const [sort, order] = e.target.value.split("-");
+                      setSortBy(sort);
+                      setSortOrder(order);
+                    }}
+                  >
+                    <option value="name-asc">Name Asc</option>
+                    <option value="name-desc">Name Desc</option>
+                  </NativeSelect.Field>
+                </NativeSelect.Root>
+                <NativeSelect.Root>
+                  <NativeSelect.Field
+                    value={filterGroup}
+                    onChange={(e) => setFilterGroup(e.target.value)}
+                  >
+                    <option value="">All Groups</option>
+                    <option value="spansko 2">Spansko 2</option>
+                    <option value="spansko 3">Spansko 3</option>
+                    <option value="spansko 4">Spansko 4</option>
+                    <option value="spansko 5">Spansko 5</option>
+                    <option value="spansko 6">Spansko 6</option>
+                  </NativeSelect.Field>
+                </NativeSelect.Root>
+              </Flex>
               {dialogComponent()}
             </Flex>
           </Card.Header>
           <Card.Body>
-            {clients.length > 0 &&
-              clients.map((athlete) => {
-                return (
-                  <ClientCard
-                    key={athlete.id}
-                    name={athlete.name}
-                    group={athlete.group}
-                    email={athlete.email}
-                    isActiveAthlete={athlete.isActiveAthlete}
-                    daysSinceJoining={athlete.daysSinceJoining}
+            {clients.length > 0 ? (
+              clients.map((athlete) => (
+                <ClientCard
+                  key={athlete.id}
+                  name={athlete.name}
+                  group={athlete.group}
+                  email={athlete.email}
+                  isActiveAthlete={athlete.isActiveAthlete}
+                  daysSinceJoining={athlete.daysSinceJoining}
+                />
+              ))
+            ) : (
+              <EmptyState.Root>
+                <EmptyState.Content>
+                  <EmptyState.Indicator>
+                    <HiColorSwatch />
+                  </EmptyState.Indicator>
+                  <VStack textAlign="center">
+                    <EmptyState.Title>No Clients Found</EmptyState.Title>
+                    <EmptyState.Description>
+                      There are no clients matching your criteria.
+                    </EmptyState.Description>
+                  </VStack>
+                </EmptyState.Content>
+              </EmptyState.Root>
+            )}
+            {clients.length > 0 && (
+              <Pagination.Root
+                my={2}
+                count={pagination.totalCount}
+                pageSize={pagination.pageSize}
+                page={pagination.currentPage}
+                onPageChange={(details) =>
+                  setPagination((prev) => ({
+                    ...prev,
+                    currentPage: details.page,
+                  }))
+                }
+              >
+                <ButtonGroup variant="ghost" size="sm">
+                  <Pagination.PrevTrigger asChild>
+                    <IconButton>
+                      <LuChevronLeft />
+                    </IconButton>
+                  </Pagination.PrevTrigger>
+
+                  <Pagination.Items
+                    render={(page) => (
+                      <IconButton
+                        variant={{ base: "ghost", _selected: "outline" }}
+                      >
+                        {page.value}
+                      </IconButton>
+                    )}
                   />
-                );
-              })}
+
+                  <Pagination.NextTrigger asChild>
+                    <IconButton>
+                      <LuChevronRight />
+                    </IconButton>
+                  </Pagination.NextTrigger>
+                </ButtonGroup>
+              </Pagination.Root>
+            )}
           </Card.Body>
         </>
       )}
