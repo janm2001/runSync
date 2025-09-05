@@ -8,9 +8,9 @@ import Analytics from "../Analytics/Analytics";
 import MyTrainingGroup from "../MyTrainingGroup/MyTrainingGroup";
 import TrainingHistory from "../TrainingHistory/TrainingHistory";
 import MyGroup from "../MyGroup/MyGroup";
-import ClientProgress from "@/pages/ClientProgress/ClientProgress";
 import Attendances from "../Attendances/Attendances";
 import StravaSync from "../StravaSync/StravaSync";
+import ClientProgress from "../ClientProgress/ClientProgress";
 
 const MainTabs = ({
   view,

@@ -1,6 +1,6 @@
 import { Grid } from "@chakra-ui/react";
-import MonthlyProgress from "../MonthlyProgress/MonthlyProgress";
 import PersonalRecords from "@/components/PersonalRecords/PersonalRecords";
+import MonthlyProgress from "@/components/MonthlyProgress/MonthlyProgress";
 
 const ClientProgress = () => {
   return (

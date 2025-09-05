@@ -1,5 +1,5 @@
 import GroupPosition from "@/components/GroupPosition/GroupPosition";
-import { Card, Heading } from "@chakra-ui/react";
+import { Card } from "@chakra-ui/react";
 
 const MonthlyProgress = () => {
   return (
