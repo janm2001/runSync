@@ -2,14 +2,16 @@ import { Card, Grid } from "@chakra-ui/react";
 import ProgressStatus from "../ProgressStatus/ProgressStatus";
 import PerformanceCard from "../PerformanceCard/PerformanceCard";
 import AttendanceChart from "../AttendanceChart/AttendanceChart";
+import { useLanguage } from "@/context/LanguageContext";
 
 const Analytics = () => {
+  const { t } = useLanguage();
   return (
     <>
       <Grid templateColumns="repeat(2, 1fr)" gap="4">
         <Card.Root p={4}>
           <Card.Header>
-            <Card.Title>Group Progress Monthly</Card.Title>
+            <Card.Title>{t("analytics.group.title")}</Card.Title>
           </Card.Header>
           <Card.Body>
             <ProgressStatus groupName="Spansko 6" progress={63} />
@@ -21,7 +23,7 @@ const Analytics = () => {
 
         <Card.Root p={4}>
           <Card.Header>
-            <Card.Title>Performance Insight</Card.Title>
+            <Card.Title>{t("analytics.performance.title")}</Card.Title>
           </Card.Header>
 
           <Card.Body>

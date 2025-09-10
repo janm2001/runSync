@@ -16,6 +16,7 @@ import { HiColorSwatch } from "react-icons/hi";
 import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
 import * as XLSX from "xlsx";
+import { useLanguage } from "@/context/LanguageContext";
 
 // Add type declaration for jsPDF with autoTable
 interface AutoTableOptions {
@@ -38,7 +39,7 @@ const UpcomingTrainingSessions = () => {
   const [trainingSessions, setTrainingSessions] = useState<Training[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [isError, setIsError] = useState<boolean>(false);
-
+  const { t } = useLanguage();
   const fetchTrainingSessions = () => {
     const apiUrl = import.meta.env.VITE_API_BASE_URL;
     axios
@@ -224,17 +225,17 @@ const UpcomingTrainingSessions = () => {
               <Icon size={"lg"}>
                 <FaCalendar />
               </Icon>{" "}
-              Training Sessions Report
+              {t("upcoming.training.title")}
             </Card.Title>
             <Flex gap={2}>
               <Button size="sm" variant="outline" onClick={exportToExcel}>
-                📊 Export Excel
+                📊 {t("upcoming.training.export.excel")}
               </Button>
               <Button size="sm" variant="outline" onClick={printReport}>
-                <FaPrint /> Print
+                <FaPrint /> {t("upcoming.training.print")}
               </Button>
               <Button size="sm" colorScheme="red" onClick={generatePDFReport}>
-                <FaFilePdf /> Export PDF
+                <FaFilePdf /> {t("upcoming.training.export.pdf")}
               </Button>
             </Flex>
           </Flex>

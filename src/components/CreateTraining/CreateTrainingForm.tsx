@@ -16,6 +16,7 @@ import { FaSync } from "react-icons/fa";
 import Intervals from "./Intervals";
 import axios from "axios";
 import { Toaster, toaster } from "../ui/toaster";
+import { useLanguage } from "@/context/LanguageContext";
 
 const initialState: ICreateTrainingForm = {
   title: "",
@@ -54,7 +55,7 @@ const formReducer = (
 
 const CreateTrainingForm = () => {
   const [state, dispatch] = useReducer(formReducer, initialState);
-
+  const { t } = useLanguage();
   const handleFieldChange = (
     field: keyof ICreateTrainingForm,
     value: string | number
@@ -141,7 +142,7 @@ const CreateTrainingForm = () => {
 
       toaster.create({
         title: "Training Session Created",
-        description: "Your training session has been successfully created.",
+        description: t("create.training.success"),
         duration: 3000,
       });
 
@@ -150,7 +151,7 @@ const CreateTrainingForm = () => {
       console.error("Error creating training session:", error);
       toaster.create({
         title: "Error",
-        description: "Failed to create training session. Please try again.",
+        description: t("create.training.error"),
         duration: 3000,
       });
     }
@@ -163,10 +164,12 @@ const CreateTrainingForm = () => {
           <VStack gap={6} align="stretch">
             {/* Title Input */}
             <Field.Root required>
-              <Field.Label htmlFor="title">Session Title</Field.Label>
+              <Field.Label htmlFor="title">
+                {t("create.training.form.title")}
+              </Field.Label>
               <Input
                 id="title"
-                placeholder="Title of the training session"
+                placeholder={t("create.training.form.title")}
                 value={state.title}
                 onChange={(e) => handleFieldChange("title", e.target.value)}
               />
@@ -178,7 +181,7 @@ const CreateTrainingForm = () => {
               <NativeSelect.Root>
                 <NativeSelect.Field
                   id="group"
-                  placeholder="Select a group"
+                  placeholder={t("create.training.form.group")}
                   value={state.group}
                   onChange={(e) => handleFieldChange("group", e.target.value)}
                 >
@@ -196,7 +199,7 @@ const CreateTrainingForm = () => {
               <NativeSelect.Root>
                 <NativeSelect.Field
                   id="type"
-                  placeholder="Select a training type"
+                  placeholder={t("create.training.form.type")}
                   value={state.type}
                   onChange={(e) => handleFieldChange("type", e.target.value)}
                 >

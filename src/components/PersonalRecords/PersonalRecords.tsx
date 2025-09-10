@@ -6,6 +6,7 @@ import RecordCrudDialog from "./RecordCrudDialog";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useUser } from "@/context/UserContext";
+import { useLanguage } from "@/context/LanguageContext";
 
 export interface Record {
   id: string;
@@ -25,6 +26,7 @@ const PersonalRecords = () => {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [editingRecord, setEditingRecord] = useState<Record | null>(null);
   const { user } = useUser();
+  const { t } = useLanguage();
 
   const fetchRecords = async () => {
     try {
@@ -84,13 +86,13 @@ const PersonalRecords = () => {
           <Icon size={"lg"}>
             <FaTable />
           </Icon>{" "}
-          Personal Records
+          {t("personal.records.title")}
         </Card.Title>
       </Card.Header>
       <Card.Body>
         <Flex justifyContent="end">
           <Button variant="outline" size="sm" onClick={handleAddRecord}>
-            Add Record
+            {t("personal.record.crud.add")}
           </Button>
         </Flex>
         {records && records.length >= 3 && (

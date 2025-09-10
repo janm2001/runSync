@@ -1,24 +1,26 @@
 import GroupPosition from "@/components/GroupPosition/GroupPosition";
-import { Card, Heading } from "@chakra-ui/react";
+import { useLanguage } from "@/context/LanguageContext";
+import { Card } from "@chakra-ui/react";
 
 const MonthlyProgress = () => {
+  const { t } = useLanguage();
   return (
     <Card.Root>
-      <Card.Header>Monthly Progress</Card.Header>
+      <Card.Header>{t("monthly.progress.title")}</Card.Header>
       <Card.Body>
         <GroupPosition
-          text="Training sessions complited"
+          text={t("monthly.progress.trainings")}
           position={8}
           total={10}
         />
         <GroupPosition
-          text="Pace Improvement"
+          text={t("monthly.progress.pace.improvement")}
           position={8}
           total={10}
           percentage={15}
         />
         <GroupPosition
-          text="Endurance building"
+          text={t("monthly.progress.endurance.improvement")}
           position={8}
           total={10}
           percentage={22}

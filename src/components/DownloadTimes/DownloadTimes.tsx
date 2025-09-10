@@ -1,3 +1,4 @@
+import { useLanguage } from "@/context/LanguageContext";
 import { VStack } from "@chakra-ui/react";
 import axios from "axios";
 import { useCallback, useState } from "react";
@@ -27,6 +28,7 @@ const DownloadTimes = () => {
   const [selectedSpeed, setSelectedSpeed] = useState(
     SPEED_LIMITS[0].bytesPerSecond
   );
+  const { t } = useLanguage();
 
   const resetState = () => {
     setIsDownloading(false);
@@ -93,14 +95,11 @@ const DownloadTimes = () => {
 
   return (
     <VStack verticalAlign={"center"} justifyContent="center" p={4} gap={8}>
-      <h1>Runner Performance Benchmarks</h1>
-      <p>
-        Download a data set of running times to see how you stack up. You can
-        simulate different network speeds.
-      </p>
+      <h1>{t("download.benchmark")}</h1>
+      <p>{t("download.benchmark.description")}</p>
 
       <div className="controls">
-        <label htmlFor="speed-select">Select Speed:</label>
+        <label htmlFor="speed-select">{t("download.select.speed")}</label>
         <select
           id="speed-select"
           disabled={isDownloading}
@@ -118,7 +117,9 @@ const DownloadTimes = () => {
           disabled={isDownloading}
           style={{ marginTop: "10px" }}
         >
-          {isDownloading ? "Downloading..." : "Download Data"}
+          {isDownloading
+            ? t("download.downloading")
+            : t("download.download.data")}
         </button>
       </div>
 
@@ -135,13 +136,13 @@ const DownloadTimes = () => {
 
       {runningData.length > 0 && !isDownloading && (
         <div className="results-table">
-          <h2>Benchmark Times</h2>
+          <h2>{t("download.benchmark.times")}</h2>
           <table>
             <thead>
               <tr>
-                <th>Distance</th>
-                <th>Skill Level</th>
-                <th>Benchmark Time</th>
+                <th>{t("download.distance")}</th>
+                <th>{t("download.skill.level")}</th>
+                <th>{t("download.benchmark.time")}</th>
               </tr>
             </thead>
             <tbody>

@@ -22,6 +22,7 @@ import axios from "axios";
 import { HiColorSwatch } from "react-icons/hi";
 import { toaster } from "../ui/toaster";
 import { LuChevronLeft, LuChevronRight } from "react-icons/lu";
+import { useLanguage } from "@/context/LanguageContext";
 
 const initialAthleteState = {
   name: "",
@@ -46,6 +47,7 @@ const ManageClients = () => {
   const [sortBy, setSortBy] = useState("name");
   const [sortOrder, setSortOrder] = useState("asc");
   const [filterGroup, setFilterGroup] = useState("");
+  const { t } = useLanguage();
 
   const fetchAthletes = (pageToFetch: number) => {
     setIsLoading(true);
@@ -97,7 +99,6 @@ const ManageClients = () => {
         ...newAthlete,
         attendance: Number(newAthlete.attendance) || 0,
       };
-      console.log("Submitting athlete data:", athleteData); // Log the data
       await axios.post(`${apiUrl}/athletes`, athleteData);
       toaster.create({
         title: "Athlete Created",
@@ -148,7 +149,7 @@ const ManageClients = () => {
       >
         <Dialog.Trigger asChild>
           <Button variant="outline" colorScheme="blue">
-            Add New Client
+            {t("manage.clients.add")}
           </Button>
         </Dialog.Trigger>
         <Portal>
@@ -156,7 +157,7 @@ const ManageClients = () => {
           <Dialog.Positioner>
             <Dialog.Content as="form" onSubmit={handleSubmit}>
               <Dialog.Header>
-                <Dialog.Title>Add a New Client</Dialog.Title>
+                <Dialog.Title>{t("manage.clients.add")}</Dialog.Title>
                 <Dialog.CloseTrigger asChild>
                   <CloseButton size="sm" />
                 </Dialog.CloseTrigger>
@@ -232,10 +233,8 @@ const ManageClients = () => {
     return (
       <Card.Root p={2}>
         <Card.Header>
-          <Card.Title>Client Management</Card.Title>
-          <Card.Description>
-            Track and grade individual athlete performance
-          </Card.Description>
+          <Card.Title>{t("manage.clients.title")}</Card.Title>
+          <Card.Description>{t("manage.clients.description")}</Card.Description>
         </Card.Header>
         <EmptyState.Root>
           <EmptyState.Content>
@@ -243,7 +242,10 @@ const ManageClients = () => {
               <HiColorSwatch />
             </EmptyState.Indicator>
             <VStack textAlign="center">
-              <EmptyState.Title>No Data Found</EmptyState.Title>
+              <EmptyState.Title>{t("manage.clients.no.data")}</EmptyState.Title>
+              <EmptyState.Description>
+                {t("manage.client.no.data.description")}
+              </EmptyState.Description>
             </VStack>
           </EmptyState.Content>
         </EmptyState.Root>
@@ -312,9 +314,11 @@ const ManageClients = () => {
                     <HiColorSwatch />
                   </EmptyState.Indicator>
                   <VStack textAlign="center">
-                    <EmptyState.Title>No Clients Found</EmptyState.Title>
+                    <EmptyState.Title>
+                      {t("manage.clients.no.data")}
+                    </EmptyState.Title>
                     <EmptyState.Description>
-                      There are no clients matching your criteria.
+                      {t("manage.client.no.data.description")}
                     </EmptyState.Description>
                   </VStack>
                 </EmptyState.Content>

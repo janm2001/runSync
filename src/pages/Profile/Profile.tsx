@@ -1,3 +1,4 @@
+import { useLanguage } from "@/context/LanguageContext";
 import { useUser } from "@/context/UserContext";
 import {
   Button,
@@ -11,6 +12,7 @@ import { useNavigate } from "react-router-dom";
 
 const Profile = () => {
   const { user } = useUser();
+  const { t } = useLanguage();
   const navigate = useNavigate();
 
   const navigateToMainPage = () => {
@@ -42,24 +44,27 @@ const Profile = () => {
   return (
     <VStack gap={4} p={4} maxW="600px" mx="auto">
       <Heading as="h1" size="xl" mb={4}>
-        Profile Page
+        {t("profile.title")}
       </Heading>
 
       <VStack gap={3} align="stretch" w="100%">
         <Text fontSize="lg">
-          <strong>Type of user:</strong> {getUserRoleDisplay(user.role)}
+          <strong>{t("profile.type.of.user")}:</strong>{" "}
+          {getUserRoleDisplay(user.role)}
         </Text>
 
         <Text fontSize="lg">
-          <strong>Email:</strong> {user.email || "Not provided"}
+          <strong>{t("profile.email")}:</strong> {user.email || "Not provided"}
         </Text>
 
         <Text fontSize="lg">
-          <strong>First Name:</strong> {user.firstName || "Not provided"}
+          <strong>{t("profile.firstname")}:</strong>{" "}
+          {user.firstName || "Not provided"}
         </Text>
 
         <Text fontSize="lg">
-          <strong>Last Name:</strong> {user.lastName || "Not provided"}
+          <strong>{t("profile.lastname")}:</strong>{" "}
+          {user.lastName || "Not provided"}
         </Text>
 
         {/* Show client or coach specific info if available */}
@@ -79,7 +84,7 @@ const Profile = () => {
         onClick={navigateToMainPage}
         w="200px"
       >
-        Go to Main Page
+        {t("profile.go.to.main.page")}
       </Button>
     </VStack>
   );

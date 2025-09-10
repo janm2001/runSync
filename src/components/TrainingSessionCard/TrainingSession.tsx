@@ -16,12 +16,14 @@ import { FaEye, FaTrash } from "react-icons/fa";
 import axios from "axios";
 import { Toaster, toaster } from "../ui/toaster";
 import { useUser } from "@/context/UserContext";
+import { useLanguage } from "@/context/LanguageContext";
 
 const TrainingSession = ({
   session,
   fetchTrainingSessions,
 }: ITrainingSessionCard) => {
   const { user } = useUser();
+  const { t } = useLanguage();
   const deleteSession = () => {
     const apiUrl = import.meta.env.VITE_API_BASE_URL;
     axios
@@ -56,7 +58,7 @@ const TrainingSession = ({
           <Dialog.Positioner>
             <Dialog.Content>
               <Dialog.Header>
-                <Dialog.Title>Training Details</Dialog.Title>
+                <Dialog.Title>{t("training.session.title")}</Dialog.Title>
                 <Dialog.CloseTrigger asChild>
                   <CloseButton size="sm" />
                 </Dialog.CloseTrigger>
@@ -68,17 +70,28 @@ const TrainingSession = ({
                   gap={4}
                   alignItems="flex-start"
                 >
-                  <Text>Title: {session.title}</Text>
-                  <Text>Group: {session.group}</Text>
-                  <Text>Date: {session.date}</Text>
-                  <Text>Type: {session.type}</Text>
                   <Text>
-                    Description:{" "}
+                    {t("training.session.dialog.title")}: {session.title}
+                  </Text>
+                  <Text>
+                    {t("training.session.dialog.group")}: {session.group}
+                  </Text>
+                  <Text>
+                    {t("training.session.dialog.date")}: {session.date}
+                  </Text>
+                  <Text>
+                    {t("training.session.dialog.type")}: {session.type}
+                  </Text>
+                  <Text>
+                    {t("training.session.dialog.description")}:{" "}
                     {session.description || "No description available."}
                   </Text>
-                  <Text>Duration: {session.duration} minutes</Text>
                   <Text>
-                    Intervals:{" "}
+                    {t("training.session.dialog.duration")}: {session.duration}{" "}
+                    minutes
+                  </Text>
+                  <Text>
+                    {t("training.session.dialog.intervals")}:{" "}
                     {session.intervals
                       ? session.intervals.map((interval, index) => (
                           <span key={index}>
@@ -89,8 +102,14 @@ const TrainingSession = ({
                         ))
                       : "No intervals defined."}
                   </Text>
-                  <Text>Attendance: {session.attendance.length} athletes</Text>
-                  <Text>Completed: {session.completed ? "Yes" : "No"}</Text>
+                  <Text>
+                    {t("training.session.dialog.attendance")}:{" "}
+                    {session.attendance.length} athletes
+                  </Text>
+                  <Text>
+                    {t("training.session.dialog.completed")}:{" "}
+                    {session.completed ? "Yes" : "No"}
+                  </Text>
                 </Grid>
               </Dialog.Body>
             </Dialog.Content>

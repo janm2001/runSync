@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import StravaActivity from "./StravaActivity/StravaActivity";
 import { Grid } from "@chakra-ui/react";
+import { useLanguage } from "@/context/LanguageContext";
 
 // Your Strava Client ID from your Strava API settings
 const STRAVA_CLIENT_ID = "138776";
@@ -42,7 +43,7 @@ const StravaSync = () => {
   const [error, setError] = useState<string | null>(null);
   const [accessToken, setAccessToken] = useState<string | null>(null);
   const [athlete, setAthlete] = useState<StravaAthlete | null>(null);
-
+  const { t } = useLanguage();
   // Check if user is authenticated
   const isAuthenticated = !!accessToken;
 
@@ -212,10 +213,10 @@ const StravaSync = () => {
 
   return (
     <div style={{ padding: "20px" }}>
-      <h1>Strava Sync</h1>
+      <h1>{t("strava.sync.title")}</h1>
       {!isAuthenticated ? (
         <div>
-          <p>Connect your Strava account to sync your activities.</p>
+          <p>{t("strava.sync.desc")}</p>
           <a href={STRAVA_AUTH_URL}>
             <button
               style={{
@@ -227,7 +228,7 @@ const StravaSync = () => {
                 cursor: "pointer",
               }}
             >
-              Connect to Strava
+              {t("strava.connect.button")}
             </button>
           </a>
         </div>
@@ -236,7 +237,8 @@ const StravaSync = () => {
           {athlete && (
             <div style={{ marginBottom: "20px" }}>
               <h3>
-                Connected as: {athlete.firstname} {athlete.lastname}
+                {t("strava.connected.as")}: {athlete.firstname}{" "}
+                {athlete.lastname}
               </h3>
               <button
                 onClick={handleDisconnect}
@@ -249,16 +251,18 @@ const StravaSync = () => {
                   cursor: "pointer",
                 }}
               >
-                Disconnect
+                {t("strava.disconnect.button")}
               </button>
             </div>
           )}
 
-          <h2>Recent Activities</h2>
+          <h2>{t("strava.recent.activities")}</h2>
           {isLoading ? (
-            <p>Loading...</p>
+            <p>{t("strava.loading")}</p>
           ) : error ? (
-            <p style={{ color: "red" }}>Error: {error}</p>
+            <p style={{ color: "red" }}>
+              {t("strava.error")}: {error}
+            </p>
           ) : activities.length > 0 ? (
             <Grid templateColumns="repeat(2, 1fr)" gap={6}>
               {activities.map((activity: StravaActivity) => (
@@ -272,7 +276,7 @@ const StravaSync = () => {
               ))}
             </Grid>
           ) : (
-            <p>No recent activities found.</p>
+            <p>{t("strava.no.activities")}</p>
           )}
         </div>
       )}

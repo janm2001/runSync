@@ -1,3 +1,4 @@
+import { useLanguage } from "@/context/LanguageContext";
 import { useUser } from "@/context/UserContext";
 import {
   Avatar,
@@ -13,6 +14,7 @@ import { useNavigate } from "react-router-dom";
 const Navbar = () => {
   const { user, setUser } = useUser();
   const navigate = useNavigate();
+  const { t } = useLanguage();
   return (
     <Flex
       as={"nav"}
@@ -52,16 +54,16 @@ const Navbar = () => {
                     value="profile"
                     onClick={() => navigate("/profile")}
                   >
-                    Profile
+                    {t("navbar.profile")}
                   </Menu.Item>
                   <Menu.Item
                     value="settings"
                     onClick={() => navigate("/settings")}
                   >
-                    Settings
+                    {t("navbar.settings")}
                   </Menu.Item>
                   <Menu.Item value="logout" onClick={() => setUser(null)}>
-                    Logout
+                    {t("navbar.logout")}
                   </Menu.Item>
                 </Menu.Content>
               </Menu.Positioner>

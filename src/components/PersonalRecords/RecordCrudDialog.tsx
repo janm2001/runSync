@@ -1,3 +1,4 @@
+import { useLanguage } from "@/context/LanguageContext";
 import {
   Button,
   Dialog,
@@ -35,6 +36,7 @@ const RecordCrudDialog = ({
 }: RecordCrudDialogProps) => {
   const [localRecords, setLocalRecords] = useState<Record[]>(records);
   const [editingId, setEditingId] = useState<string | null>(null);
+  const { t } = useLanguage();
 
   useEffect(() => {
     setLocalRecords(records);
@@ -84,12 +86,12 @@ const RecordCrudDialog = ({
         <Dialog.Positioner>
           <Dialog.Content>
             <Dialog.Header>
-              <Dialog.Title>Manage Personal Records</Dialog.Title>
+              <Dialog.Title>{t("personal.record.crud.title")}</Dialog.Title>
             </Dialog.Header>
             <Dialog.Body>
               <Flex direction="column" gap={4}>
                 <Button onClick={handleAdd} colorScheme="green" size="sm">
-                  <FaPlus /> Add Record
+                  <FaPlus /> {t("personal.record.crud.add")}
                 </Button>
                 {localRecords.map((record) => (
                   <Flex
@@ -104,7 +106,9 @@ const RecordCrudDialog = ({
                       {editingId === record.id ? (
                         <>
                           <Field.Root>
-                            <Field.Label>Title</Field.Label>
+                            <Field.Label>
+                              {t("personal.record.crud.title")}
+                            </Field.Label>
                             <Input
                               value={record.title}
                               onChange={(e) =>
@@ -113,7 +117,9 @@ const RecordCrudDialog = ({
                             />
                           </Field.Root>
                           <Field.Root>
-                            <Field.Label>Time</Field.Label>
+                            <Field.Label>
+                              {t("personal.record.crud.time")}
+                            </Field.Label>
                             <Input
                               value={record.time}
                               onChange={(e) =>
@@ -122,7 +128,9 @@ const RecordCrudDialog = ({
                             />
                           </Field.Root>
                           <Field.Root>
-                            <Field.Label>Date</Field.Label>
+                            <Field.Label>
+                              {t("personal.record.crud.date")}
+                            </Field.Label>
                             <Input
                               type="date"
                               value={record.date}
@@ -132,7 +140,9 @@ const RecordCrudDialog = ({
                             />
                           </Field.Root>
                           <Field.Root>
-                            <Field.Label>Improvement</Field.Label>
+                            <Field.Label>
+                              {t("personal.record.crud.improvement")}
+                            </Field.Label>
                             <Input
                               value={record.improvement}
                               onChange={(e) =>
@@ -153,9 +163,16 @@ const RecordCrudDialog = ({
                           <div>
                             <strong>{record.title}</strong>
                           </div>
-                          <div>Time: {record.time}</div>
-                          <div>Date: {record.date}</div>
-                          <div>Improvement: {record.improvement}</div>
+                          <div>
+                            {t("personal.record.crud.time")}: {record.time}
+                          </div>
+                          <div>
+                            {t("personal.record.crud.date")}: {record.date}
+                          </div>
+                          <div>
+                            {t("personal.record.crud.improvement")}:{" "}
+                            {record.improvement}
+                          </div>
                         </>
                       )}
                     </Flex>
@@ -182,10 +199,10 @@ const RecordCrudDialog = ({
             </Dialog.Body>
             <Dialog.Footer>
               <Button variant="outline" onClick={onClose}>
-                Cancel
+                {t("personal.record.crud.cancel")}
               </Button>
               <Button colorScheme="blue" onClick={handleSave}>
-                Save Changes
+                {t("personal.record.crud.save")}
               </Button>
             </Dialog.Footer>
           </Dialog.Content>

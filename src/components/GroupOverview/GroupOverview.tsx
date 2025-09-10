@@ -12,11 +12,13 @@ import { type Group } from "@/data/dummyData";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { HiColorSwatch } from "react-icons/hi";
+import { useLanguage } from "@/context/LanguageContext";
 
 const GroupOverview = () => {
   const [groupData, setGroupData] = useState<Group[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [isError, setIsError] = useState<boolean>(false);
+  const { t } = useLanguage();
   useEffect(() => {
     const apiUrl = import.meta.env.VITE_API_BASE_URL;
     axios
@@ -46,11 +48,9 @@ const GroupOverview = () => {
             <Icon size={"lg"}>
               <FaUsers />
             </Icon>{" "}
-            Group Overview
+            {t("group.overview.title")}
           </Card.Title>
-          <Card.Description>
-            Monitor your training groups at a glance
-          </Card.Description>
+          <Card.Description>{t("group.overview.description")}</Card.Description>
         </Card.Header>
         <EmptyState.Root>
           <EmptyState.Content>
@@ -58,7 +58,7 @@ const GroupOverview = () => {
               <HiColorSwatch />
             </EmptyState.Indicator>
             <VStack textAlign="center">
-              <EmptyState.Title>No Data Found</EmptyState.Title>
+              <EmptyState.Title>{t("group.overview.no.data")}</EmptyState.Title>
             </VStack>
           </EmptyState.Content>
         </EmptyState.Root>
@@ -76,10 +76,10 @@ const GroupOverview = () => {
               <Icon size={"lg"}>
                 <FaUsers />
               </Icon>{" "}
-              Group Overview
+              {t("group.overview.title")}
             </Card.Title>
             <Card.Description>
-              Monitor your training groups at a glance
+              {t("group.overview.description")}
             </Card.Description>
           </Card.Header>
           <Card.Body>

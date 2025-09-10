@@ -1,7 +1,9 @@
+import { useLanguage } from "@/context/LanguageContext";
 import { Box, Card, Flex, Text, Icon, VStack } from "@chakra-ui/react";
 import { FaUsers } from "react-icons/fa";
 
 const MyTrainingGroup = () => {
+  const { t } = useLanguage();
   return (
     <Card.Root p={2}>
       <Card.Header>
@@ -9,11 +11,9 @@ const MyTrainingGroup = () => {
           <Icon size={"lg"}>
             <FaUsers />
           </Icon>{" "}
-          My Training Group
+          {t("mytraininggroup.title")}
         </Card.Title>
-        <Card.Description>
-          Monitor your training groups at a glance
-        </Card.Description>
+        <Card.Description>{t("mytraininggroup.description")}</Card.Description>
       </Card.Header>
       <Card.Body>
         <Flex alignItems="center" justifyContent="space-between">

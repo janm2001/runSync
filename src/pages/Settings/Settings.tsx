@@ -4,7 +4,7 @@ import { FaGlobe } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 
 const Settings = () => {
-  const { language, setLanguage } = useLanguage();
+  const { t, language, setLanguage } = useLanguage();
   const navigate = useNavigate();
   const navigateToMainPage = () => {
     navigate("/");
@@ -12,7 +12,7 @@ const Settings = () => {
   return (
     <VStack align="center" justify="center" p={4} gap={4}>
       <Heading as="h1" size="xl" mb={4}>
-        Settings Page
+        {t("settings.title")}
       </Heading>
       <Flex gap={2} alignItems={"center"}>
         <Icon size="md">
@@ -40,7 +40,7 @@ const Settings = () => {
         colorScheme="cyan"
         onClick={navigateToMainPage}
       >
-        Go to Main Page
+        {t("profile.goToMainPage")}
       </Button>
     </VStack>
   );

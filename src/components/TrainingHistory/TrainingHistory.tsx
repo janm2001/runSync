@@ -1,16 +1,16 @@
 import { Card } from "@chakra-ui/react";
 import TrainingCard from "../TrainingCard/TrainingCard";
+import { useLanguage } from "@/context/LanguageContext";
 
 const TrainingHistory = () => {
+  const { t } = useLanguage();
   return (
     <Card.Root p={2}>
       <Card.Header>
         <Card.Title alignItems={"center"} display="flex" gap={2}>
-          Training History
+          {t("training.history.title")}
         </Card.Title>
-        <Card.Description>
-          Your performance and coach feedback from recent sessions
-        </Card.Description>
+        <Card.Description>{t("training.history.description")}</Card.Description>
       </Card.Header>
       <Card.Body>
         <TrainingCard

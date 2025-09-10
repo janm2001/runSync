@@ -5,15 +5,19 @@ import { useLanguage } from "@/context/LanguageContext";
 import { Container, Grid } from "@chakra-ui/react";
 
 const Client = () => {
-  const mainTabsConfig = {
-    view: "client",
-    firstTab: { label: "Overview", value: "overview" },
-    secondTab: { label: "Training History", value: "training-history" },
-    thirdTab: { label: "My Group", value: "my-group" },
-    fourthTab: { label: "Progress", value: "progress" },
-    fifthTab: { label: "Strava Sync", value: "strava-sync" },
-  };
   const { t } = useLanguage();
+
+  const mainTabsConfig = {
+    view: t("client.view"),
+    firstTab: { label: t("client.overview"), value: "overview" },
+    secondTab: {
+      label: t("client.training.history"),
+      value: "training-history",
+    },
+    thirdTab: { label: t("client.my.group"), value: "my-group" },
+    fourthTab: { label: t("client.progress"), value: "progress" },
+    fifthTab: { label: t("client.strava.sync"), value: "strava-sync" },
+  };
   return (
     <>
       <Header

@@ -5,15 +5,16 @@ import { useLanguage } from "@/context/LanguageContext";
 import { Container, Grid } from "@chakra-ui/react";
 
 const Coach = () => {
-  const mainTabsConfig = {
-    view: "coach",
-    firstTab: { label: "Overview", value: "overview" },
-    secondTab: { label: "Manage Clients", value: "manage-clients" },
-    thirdTab: { label: "Create Training", value: "create-training" },
-    fourthTab: { label: "Analytics", value: "analytics" },
-    fifthTab: { label: "Attendance", value: "attendance" },
-  };
   const { t } = useLanguage();
+
+  const mainTabsConfig = {
+    view: t("coach.view"),
+    firstTab: { label: t("coach.overview"), value: "overview" },
+    secondTab: { label: t("coach.manage.clients"), value: "manage-clients" },
+    thirdTab: { label: t("coach.create.training"), value: "create-training" },
+    fourthTab: { label: t("coach.analytics"), value: "analytics" },
+    fifthTab: { label: t("coach.attendance"), value: "attendance" },
+  };
   return (
     <>
       <Header
