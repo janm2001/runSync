@@ -7,7 +7,9 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "mock:server": "node mock/mock-server.js",
+    "mock": "concurrently \"npm run mock:server\" \"vite --mode mock\""
   },
   "dependencies": {
     "@chakra-ui/charts": "^3.22.0",
@@ -35,6 +37,7 @@
     "@types/react-dom": "^19.1.2",
     "@types/xlsx": "^0.0.35",
     "@vitejs/plugin-react": "^4.4.1",
+    "concurrently": "^9.2.1",
     "eslint": "^9.25.0",
     "eslint-plugin-react-hooks": "^5.2.0",
     "eslint-plugin-react-refresh": "^0.4.19",
