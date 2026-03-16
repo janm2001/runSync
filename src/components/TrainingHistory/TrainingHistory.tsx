@@ -1,11 +1,12 @@
 import { Card } from "@chakra-ui/react";
+import AppCard from "@/components/ui/AppCard";
 import TrainingCard from "../TrainingCard/TrainingCard";
 import { useLanguage } from "@/context/LanguageContext";
 
 const TrainingHistory = () => {
   const { t } = useLanguage();
   return (
-    <Card.Root p={2}>
+    <AppCard p={2}>
       <Card.Header>
         <Card.Title alignItems={"center"} display="flex" gap={2}>
           {t("training.history.title")}
@@ -40,7 +41,7 @@ const TrainingHistory = () => {
           grade="C"
         />
       </Card.Body>
-    </Card.Root>
+    </AppCard>
   );
 };
 

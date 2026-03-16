@@ -1,4 +1,5 @@
 import { Box, Card, Flex, IconButton } from "@chakra-ui/react";
+import AppCard from "@/components/ui/AppCard";
 import { FaEdit, FaTrash } from "react-icons/fa";
 
 interface IPersonalRecordCard {
@@ -19,7 +20,7 @@ const PersonalRecordCard = ({
   onDelete,
 }: IPersonalRecordCard) => {
   return (
-    <Card.Root p={2} mt={4}>
+    <AppCard p={2} mt={4}>
       <Flex align="center" justify={"space-between"} gap={4}>
         <Box>
           <Card.Header>
@@ -69,7 +70,7 @@ const PersonalRecordCard = ({
           )}
         </Flex>
       </Flex>
-    </Card.Root>
+    </AppCard>
   );
 };
 

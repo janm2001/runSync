@@ -1,4 +1,5 @@
 import { Card } from "@chakra-ui/react";
+import AppCard from "@/components/ui/AppCard";
 
 interface StravaActivityProps {
   name: string;
@@ -9,7 +10,7 @@ interface StravaActivityProps {
 
 const StravaActivity = (props: StravaActivityProps) => {
   return (
-    <Card.Root>
+    <AppCard>
       <Card.Header>
         <h2>{props.name}</h2>
       </Card.Header>
@@ -18,7 +19,7 @@ const StravaActivity = (props: StravaActivityProps) => {
         <p>Distance: {props.distance} km</p>
         <p>Duration: {props.duration} min</p>
       </Card.Body>
-    </Card.Root>
+    </AppCard>
   );
 };
 

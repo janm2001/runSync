@@ -1,4 +1,5 @@
 import { Card, Grid } from "@chakra-ui/react";
+import AppCard from "@/components/ui/AppCard";
 import GroupPosition from "../GroupPosition/GroupPosition";
 import PerformanceCard from "../PerformanceCard/PerformanceCard";
 import { useLanguage } from "@/context/LanguageContext";
@@ -6,7 +7,7 @@ import { useLanguage } from "@/context/LanguageContext";
 const MyGroup = () => {
   const { t } = useLanguage();
   return (
-    <Card.Root>
+    <AppCard>
       <Card.Header>
         <Card.Title>{t("mygroup.title")}</Card.Title>
         <Card.Description>{t("mygroup.description")}</Card.Description>
@@ -26,7 +27,7 @@ const MyGroup = () => {
           />
         </Grid>
       </Card.Body>
-    </Card.Root>
+    </AppCard>
   );
 };
 

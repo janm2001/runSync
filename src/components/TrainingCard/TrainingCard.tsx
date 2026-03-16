@@ -1,4 +1,5 @@
 import { Card, Flex, VStack, Text, Icon, Box } from "@chakra-ui/react";
+import AppCard from "@/components/ui/AppCard";
 import type { ITrainingCard } from "./types";
 import { FaCalendar, FaClock, FaLocationArrow } from "react-icons/fa";
 
@@ -11,7 +12,7 @@ const TrainingCard = ({
   grade,
 }: ITrainingCard) => {
   return (
-    <Card.Root p={2} mt={4}>
+    <AppCard p={2} mt={4}>
       <Flex alignItems="center" justifyContent="space-between">
         <VStack gap={4} alignItems="flex-start">
           <Text fontSize="lg" fontWeight="bold">
@@ -56,7 +57,7 @@ const TrainingCard = ({
           </Text>
         </VStack>
       </Flex>
-    </Card.Root>
+    </AppCard>
   );
 };
 

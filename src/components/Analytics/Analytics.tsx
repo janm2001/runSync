@@ -1,4 +1,5 @@
 import { Card, Grid } from "@chakra-ui/react";
+import AppCard from "@/components/ui/AppCard";
 import ProgressStatus from "../ProgressStatus/ProgressStatus";
 import PerformanceCard from "../PerformanceCard/PerformanceCard";
 import AttendanceChart from "../AttendanceChart/AttendanceChart";
@@ -9,7 +10,7 @@ const Analytics = () => {
   return (
     <>
       <Grid templateColumns="repeat(2, 1fr)" gap="4">
-        <Card.Root p={4}>
+        <AppCard p={4}>
           <Card.Header>
             <Card.Title>{t("analytics.group.title")}</Card.Title>
           </Card.Header>
@@ -19,9 +20,9 @@ const Analytics = () => {
             <ProgressStatus groupName="Spansko 4" progress={85} />
             <ProgressStatus groupName="Spansko 3" progress={92} />
           </Card.Body>
-        </Card.Root>
+        </AppCard>
 
-        <Card.Root p={4}>
+        <AppCard p={4}>
           <Card.Header>
             <Card.Title>{t("analytics.performance.title")}</Card.Title>
           </Card.Header>
@@ -46,7 +47,7 @@ const Analytics = () => {
               color="orange"
             />
           </Card.Body>
-        </Card.Root>
+        </AppCard>
       </Grid>
       <AttendanceChart />
     </>

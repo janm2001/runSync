@@ -1,11 +1,12 @@
 import GroupPosition from "@/components/GroupPosition/GroupPosition";
 import { useLanguage } from "@/context/LanguageContext";
 import { Card } from "@chakra-ui/react";
+import AppCard from "@/components/ui/AppCard";
 
 const MonthlyProgress = () => {
   const { t } = useLanguage();
   return (
-    <Card.Root>
+    <AppCard>
       <Card.Header>{t("monthly.progress.title")}</Card.Header>
       <Card.Body>
         <GroupPosition
@@ -26,7 +27,7 @@ const MonthlyProgress = () => {
           percentage={22}
         />
       </Card.Body>
-    </Card.Root>
+    </AppCard>
   );
 };
 

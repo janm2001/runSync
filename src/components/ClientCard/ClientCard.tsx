@@ -1,4 +1,5 @@
 import { Box, Button, Card, Flex, Icon, Text, VStack } from "@chakra-ui/react";
+import AppCard from "@/components/ui/AppCard";
 import type { IClientCard } from "./types";
 import { FaStar } from "react-icons/fa";
 import { FaComment } from "react-icons/fa";
@@ -11,7 +12,7 @@ const ClientCard = ({
   isActiveAthlete,
 }: IClientCard) => {
   return (
-    <Card.Root mt={4}>
+    <AppCard mt={4}>
       <Flex
         alignItems={"center"}
         justifyContent="space-between"
@@ -46,7 +47,7 @@ const ClientCard = ({
           </Button>
         </Box>
       </Flex>
-    </Card.Root>
+    </AppCard>
   );
 };
 

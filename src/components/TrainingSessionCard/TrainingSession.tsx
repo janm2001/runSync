@@ -1,3 +1,4 @@
+import AppCard from "@/components/ui/AppCard";
 import {
   Button,
   Card,
@@ -122,7 +123,7 @@ const TrainingSession = ({
   return (
     <>
       <Toaster />
-      <Card.Root p={4} mt={2}>
+      <AppCard p={4} mt={2}>
         <Card.Header p={0}>
           <Flex justifyContent="space-between" alignItems="center" width="100%">
             <Flex direction="column" alignItems="flex-start" flexGrow={1}>
@@ -153,7 +154,7 @@ const TrainingSession = ({
             </VStack>
           </Flex>
         </Card.Header>
-      </Card.Root>
+      </AppCard>
     </>
   );
 };

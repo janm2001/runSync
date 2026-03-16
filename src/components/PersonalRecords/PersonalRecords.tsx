@@ -1,4 +1,5 @@
 import { Button, Card, Flex, Icon } from "@chakra-ui/react";
+import AppCard from "@/components/ui/AppCard";
 import { FaTable } from "react-icons/fa";
 import PersonalRecordCard from "./PersonalRecordCard";
 import DownloadTimes from "../DownloadTimes/DownloadTimes";
@@ -80,7 +81,7 @@ const PersonalRecords = () => {
   }, [user]);
 
   return (
-    <Card.Root p={2}>
+    <AppCard p={2}>
       <Card.Header>
         <Card.Title alignItems={"center"} display="flex" gap={2}>
           <Icon size={"lg"}>
@@ -133,7 +134,7 @@ const PersonalRecords = () => {
           onSave={handleSaveRecords}
         />
       </Card.Body>
-    </Card.Root>
+    </AppCard>
   );
 };
 

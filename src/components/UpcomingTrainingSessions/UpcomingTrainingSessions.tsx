@@ -1,3 +1,4 @@
+import AppCard from "@/components/ui/AppCard";
 import {
   Button,
   Card,
@@ -218,7 +219,7 @@ const UpcomingTrainingSessions = () => {
   }, []);
   if (isError) {
     return (
-      <Card.Root p={2}>
+      <AppCard p={2}>
         <Card.Header>
           <Flex justify="space-between" align="center">
             <Card.Title alignItems={"center"} display="flex" gap={2}>
@@ -250,11 +251,11 @@ const UpcomingTrainingSessions = () => {
             </VStack>
           </EmptyState.Content>
         </EmptyState.Root>
-      </Card.Root>
+      </AppCard>
     );
   }
   return (
-    <Card.Root p={2} mt={4}>
+    <AppCard p={2} mt={4}>
       {isLoading ? (
         <SkeletonText noOfLines={4} gap="4" mt="4" />
       ) : (
@@ -297,7 +298,7 @@ const UpcomingTrainingSessions = () => {
           </Card.Body>
         </>
       )}
-    </Card.Root>
+    </AppCard>
   );
 };
 

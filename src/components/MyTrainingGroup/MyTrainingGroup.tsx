@@ -1,11 +1,12 @@
 import { useLanguage } from "@/context/LanguageContext";
 import { Box, Card, Flex, Text, Icon, VStack } from "@chakra-ui/react";
+import AppCard from "@/components/ui/AppCard";
 import { FaUsers } from "react-icons/fa";
 
 const MyTrainingGroup = () => {
   const { t } = useLanguage();
   return (
-    <Card.Root p={2}>
+    <AppCard p={2}>
       <Card.Header>
         <Card.Title alignItems={"center"} display="flex" gap={2}>
           <Icon size={"lg"}>
@@ -32,7 +33,7 @@ const MyTrainingGroup = () => {
           </Box>
         </Flex>
       </Card.Body>
-    </Card.Root>
+    </AppCard>
   );
 };
 

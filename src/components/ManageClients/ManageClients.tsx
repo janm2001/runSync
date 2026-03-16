@@ -1,3 +1,4 @@
+import AppCard from "@/components/ui/AppCard";
 import {
   Button,
   ButtonGroup,
@@ -231,7 +232,7 @@ const ManageClients = () => {
 
   if (isError) {
     return (
-      <Card.Root p={2}>
+      <AppCard p={2}>
         <Card.Header>
           <Card.Title>{t("manage.clients.title")}</Card.Title>
           <Card.Description>{t("manage.clients.description")}</Card.Description>
@@ -249,11 +250,11 @@ const ManageClients = () => {
             </VStack>
           </EmptyState.Content>
         </EmptyState.Root>
-      </Card.Root>
+      </AppCard>
     );
   }
   return (
-    <Card.Root>
+    <AppCard>
       {isLoading ? (
         <SkeletonText noOfLines={4} gap="4" mt="4" />
       ) : (
@@ -365,7 +366,7 @@ const ManageClients = () => {
           </Card.Body>
         </>
       )}
-    </Card.Root>
+    </AppCard>
   );
 };
 

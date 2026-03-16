@@ -1,11 +1,12 @@
 import { Card, Text } from "@chakra-ui/react";
+import AppCard from "@/components/ui/AppCard";
 import type { IGroupCard } from "./types";
 import { useLanguage } from "@/context/LanguageContext";
 
 const GroupCard = ({ groupName, members, pace }: IGroupCard) => {
   const { t } = useLanguage();
   return (
-    <Card.Root>
+    <AppCard>
       <Card.Header>
         <Card.Title>{groupName}</Card.Title>
       </Card.Header>
@@ -17,7 +18,7 @@ const GroupCard = ({ groupName, members, pace }: IGroupCard) => {
           {t("group.card.avg.pace")}: {pace} min/km
         </Text>
       </Card.Body>
-    </Card.Root>
+    </AppCard>
   );
 };
 

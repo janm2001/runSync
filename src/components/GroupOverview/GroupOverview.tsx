@@ -1,3 +1,4 @@
+import AppCard from "@/components/ui/AppCard";
 import {
   Card,
   EmptyState,
@@ -42,7 +43,7 @@ const GroupOverview = () => {
 
   if (isError) {
     return (
-      <Card.Root p={2}>
+      <AppCard p={2}>
         <Card.Header>
           <Card.Title alignItems={"center"} display="flex" gap={2}>
             <Icon size={"lg"}>
@@ -62,11 +63,11 @@ const GroupOverview = () => {
             </VStack>
           </EmptyState.Content>
         </EmptyState.Root>
-      </Card.Root>
+      </AppCard>
     );
   }
   return (
-    <Card.Root p={2}>
+    <AppCard p={2}>
       {isLoading ? (
         <SkeletonText noOfLines={4} gap="4" mt="4" />
       ) : (
@@ -97,7 +98,7 @@ const GroupOverview = () => {
           </Card.Body>{" "}
         </>
       )}
-    </Card.Root>
+    </AppCard>
   );
 };
 

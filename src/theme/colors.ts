@@ -49,3 +49,14 @@ export const palette = {
   /** Subtle text — placeholders, timestamps, fine print */
   textSubtle: "#4d6080",
 } as const;
+
+// ─── StatsCard accent colors ───────────────────────────────────────────────────
+// Each stat card variant gets a gradient pair and a matching glow color.
+// Import `statsCardAccents` in StatsCard instead of hard-coding hex values there.
+
+export const statsCardAccents = {
+  users: { from: "#3b82f6", to: "#6366f1", glow: "rgba(99,102,241,0.35)" },
+  "chart-pie": { from: "#10b981", to: "#06b6d4", glow: "rgba(16,185,129,0.35)" },
+  calendar: { from: "#f59e0b", to: "#ef4444", glow: "rgba(245,158,11,0.35)" },
+  "chart-line": { from: "#8b5cf6", to: "#ec4899", glow: "rgba(139,92,246,0.35)" },
+} as const;
