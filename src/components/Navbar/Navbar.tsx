@@ -10,6 +10,7 @@ import {
   Text,
 } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
+import { defaultPanelGradient } from "@/theme/colors";
 
 const Navbar = () => {
   const { user, setUser } = useUser();
@@ -22,7 +23,7 @@ const Navbar = () => {
       width={"100%"}
       justifyContent="space-between"
       padding={4}
-      bg="teal.600"
+      background={defaultPanelGradient}
       color="white"
       boxShadow="md"
     >

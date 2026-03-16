@@ -1,10 +1,11 @@
+// Brand palette — import from here instead of hard-coding hex values
 
 export const brand = {
-  /** Deep navy — darkest stop of the login gradient */
+  /** Deep navy — darkest stop of the login / navbar gradient */
   navy900: "#1a1a2e",
-  /** Mid navy — middle stop of the login gradient */
+  /** Mid navy — middle stop of the login / navbar gradient */
   navy700: "#16213e",
-  /** Royal blue — lightest stop of the login gradient */
+  /** Royal blue — lightest stop of the login / navbar gradient */
   navy500: "#0f3460",
 
   /** Primary accent used for buttons, icon badges, etc. */
@@ -13,6 +14,38 @@ export const brand = {
   accentLight: "blue.300",
 } as const;
 
-/** Login page left-panel gradient, built from the brand palette */
-export const loginPanelGradient =
+/** Gradient shared by the login left-panel and the navbar */
+export const defaultPanelGradient =
   `linear-gradient(135deg, ${brand.navy900} 0%, ${brand.navy700} 50%, ${brand.navy500} 100%)`;
+
+// ─── Main application palette ─────────────────────────────────────────────────
+// The app uses a unified dark-navy theme in both light and dark colour modes
+// so that the content area always feels cohesive with the navbar.
+
+export const palette = {
+  // ── Page / body background ──────────────────────────────────────────────────
+  /** Light mode page bg — deep navy, slightly warmer than dark mode */
+  pageBgLight: "#13192b",
+  /** Dark mode page bg — near-black navy */
+  pageBgDark: "#0d1117",
+
+  // ── Card / panel surface ────────────────────────────────────────────────────
+  /** Light mode card bg — one layer lighter than the page bg */
+  cardBgLight: "#1a2540",
+  /** Dark mode card bg */
+  cardBgDark: "#161f30",
+
+  // ── Subtle secondary surface (table rows, inputs, tag bg) ───────────────────
+  /** Light mode subtle bg */
+  subtleBgLight: "#1f2d4e",
+  /** Dark mode subtle bg */
+  subtleBgDark: "#1a2540",
+
+  // ── Foreground / text ───────────────────────────────────────────────────────
+  /** Primary text — near-white, high contrast on all dark surfaces */
+  textPrimary: "#e2e8f0",
+  /** Muted / secondary text — softer but still readable */
+  textMuted: "#8896a7",
+  /** Subtle text — placeholders, timestamps, fine print */
+  textSubtle: "#4d6080",
+} as const;

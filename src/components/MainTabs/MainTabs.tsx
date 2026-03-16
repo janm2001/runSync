@@ -26,9 +26,10 @@ const MainTabs = ({
       orientation="horizontal"
       mt={8}
       fitted
-      variant={"line"}
+      variant="subtle"
+      colorPalette="blue"
     >
-      <Tabs.List gap={1}>
+      <Tabs.List gap={1} bg="bg.subtle" borderRadius="lg" p={1}>
         <Tabs.Trigger value={firstTab.value}>{firstTab.label}</Tabs.Trigger>
         <Tabs.Trigger value={secondTab.value}>{secondTab.label}</Tabs.Trigger>
         <Tabs.Trigger value={thirdTab.value}>{thirdTab.label}</Tabs.Trigger>

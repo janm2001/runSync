@@ -15,7 +15,7 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { FaRunning, FaBolt, FaTrophy, FaUsers } from "react-icons/fa";
-import { brand, loginPanelGradient } from "@/theme/colors";
+import { brand, defaultPanelGradient } from "@/theme/colors";
 
 const features = [
   { icon: FaBolt, text: "Track athlete performance in real time" },
@@ -87,7 +87,7 @@ const Login = () => {
         flexDirection="column"
         justifyContent="space-between"
         p={12}
-        background={loginPanelGradient}
+        background={defaultPanelGradient}
         position="relative"
         overflow="hidden"
       >
@@ -125,7 +125,12 @@ const Login = () => {
               <FaRunning />
             </Icon>
           </Flex>
-          <Text fontWeight="700" fontSize="xl" color="white" letterSpacing="wide">
+          <Text
+            fontWeight="700"
+            fontSize="xl"
+            color="white"
+            letterSpacing="wide"
+          >
             RunSync
           </Text>
         </Flex>
